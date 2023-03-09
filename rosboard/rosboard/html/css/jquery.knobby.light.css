@@ -1,0 +1,53 @@
+.knobby-wrap {
+  padding: 5px;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  box-sizing: border-box;
+}
+.knobby-knob {
+  display: block;
+  position: relative;
+  width: 8em;
+  height: 8em;
+  border-radius: 100%;
+  overflow: hidden;
+  background: #eeeeee;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  border: 1px solid #aaa;
+  box-sizing: border-box;
+}
+.knobby-shadow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  border-radius: 100%;
+  border-style: solid;
+  border-width: 2px 0;
+  border-color: #ffffff #aaaaaa #aaaaaa #ffffff;
+  box-sizing: border-box;
+}
+.knobby-handle {
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  left: 50%;
+  top: 50%;
+  border-radius: 100%;
+  border-style: solid;
+  border-width: 2px 0;
+  border-color: #aaaaaa #ffffff #ffffff #aaaaaa;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+.knobby-input {
+  margin: 4px auto;
+  text-align: right;
+  padding: 5px 0;
+  font-family: monospace;
+}
+/*# sourceMappingURL=jquery.knobby.light.css.map */

@@ -1,0 +1,1221 @@
+#!/usr/bin/env python
+
+import rospy
+import threading
+import sys, select, termios, tty
+from time import time
+from time import sleep
+import os
+import math
+
+from std_msgs.msg import String, UInt8
+from std_msgs.msg import Bool
+from dsr_msgs.msg import RobotState
+
+from zetabank_msgs.msg import ZBDSRSetTraj, ZBDSRTrajStatus
+from zetabank_msgs.msg import NavigationControlStatus
+
+from zetabank_msgs.msg import RobotControlStatus
+
+from zetabank_msgs.msg import ZBDSRMove
+
+from zetabank_msgs.msg import DSRPos
+
+
+sys.dont_write_bytecode = True
+sys.path.append( os.path.abspath(os.path.join(os.path.dirname(__file__),"../../doosan-robot/common/imp")) ) # get import path : DSR_ROBOT.py 
+
+# for single robot 
+ROBOT_ID     = "dsr01"
+ROBOT_MODEL  = "m0609"
+import DR_init
+DR_init.__dsr__id = ROBOT_ID
+DR_init.__dsr__model = ROBOT_MODEL
+from DSR_ROBOT import *
+
+bEStop_Status = 0
+bTrajRunning = False
+bEStop = False
+sRobotState = "STANDBY"
+prev_RobotState = "STANDBY"
+TrajetoryNum = 0
+PrevTrajetoryNum = 0
+run_trajnum = 0
+DSRStatus = ZBDSRSetTraj.IDLING
+
+robotCtrlStatus = RobotControlStatus.IDLING
+
+bStopFlag = False
+bPrevStopFlag = False
+
+set_vel = 120
+set_acc = 150
+
+trajstat = ZBDSRTrajStatus()
+
+bRunMovPos = False
+bGoPos = False
+
+diffval = 10
+
+target_pos = [0 for i in range(7)]
+
+def shutdown():
+    print("shutdown time!")
+    print("shutdown time!")
+    print("shutdown time!")
+
+    pub_stop.publish(stop_mode=STOP_TYPE_QUICK)
+    return 0
+
+# def getKey():
+#     tty.setraw(sys.stdin.fileno())
+#     rlist, _, _ = select.select([sys.stdin], [], [], 0.1)
+#     if rlist:
+#         key = sys.stdin.read(1)
+#     else:
+#         key = ''
+
+#     termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
+#     return key
+
+msg ="""
+    Control Doosan Robot!
+    ---------------------
+    0 : Initial position
+    1 : Sample pos #1(UVC)
+    2 : Sample pos #2(Spray)
+    3 : Move Joint Angle(Start pos)
+    4 : Move Position(End pos)
+    5 : Move Position(Start pos)
+    ---------------------
+
+Ctrl-C to quit.
+"""
+
+# p1 = posx(573.83, 503.16, -194.0, 0.24, 138.64, -95.72) #p1                
+# p2 = posx(573.83, 503.16, -194.0 + 100.0, 0.24, 138.64, -95.72) #p2
+# p3 = posx(595.7, -451.86, -190.22 + 100.0, 4.81, 136.69, -90.33) #p3
+
+# p4 = posx(595.7, -451.86, -190.22 + 200.0, 4.81, 136.69, -90.33) #p4
+# p5 = posx(573.83, 503.16, -194.0 + 200.0, 0.24, 138.64, -95.72) #p5
+
+# p6 = posx(573.83, 503.16, -194.0 + 300.0, 0.24, 138.64, -95.72) #p6
+# p7 = posx(595.7, -451.86, -190.22 + 300.0, 4.81, 136.69, -90.33) #p7
+
+# p8 = posx(595.7, -451.86, -190.22 + 400.0, 4.81, 136.69, -90.33) #p8
+# p9 = posx(573.83, 503.16, -194.0 + 400.0, 0.24, 138.64, -95.72) #p9
+
+# p10 = posx(573.83, 503.16, -194.0 + 500.0, 0.24, 138.64, -95.72) #p10
+# p11 = posx(595.7, -451.86, -190.22 + 500.0, 4.81, 136.69, -90.33) #p11
+
+# startpos = posj(-42.33, 89.33, 41.79, -115.64, -33.9, -8.39) #start point
+
+# np1 = posx(566.7, 247.5, 144.06, 3.83, 125.4, 1.66)
+# np2 = posx(566.7, -342.61, 144.06, 179.13, -129.05, -91.6)
+
+
+# newp1 = posx(649.66, 28.28, -100.0, 0.59, 90.09, -2.1) 
+# newp2 = posx(649.66, 28.28, 679.44, 1.42, 90.08, -0.41) 
+# start_jp = posj(1.56, 65.16, 97.32, 3.19, -69.66, -4.89)
+
+frontpos = posj(87.5, 17.63, -107.65, 1.21, -89.4, -5.85) # front start point
+
+HollowBK_pt1 = posx(-14.51, -244.51, 405.56, 152.05, -178.67, 58.72)
+HollowBK_pt2 = posx(-266.14, -5.43, 380.55, 160.39, -177.66, 158.61)
+HollowBK_pt3 = posx(3.55, 224.09, 392.11, 98.97, 178.22, -174.61)
+HollowBK_pt4 = posx(423.6, 471.19, 494.41, 179.16, -90.76, -92.77)
+
+HollowFR_pt1 = posx(-14.51, -244.51, 405.56, 152.05, -178.67, 58.72)
+HollowFR_pt2 = posx(135.35, -328.37, 436.08, 153.19, -143.76, 55.61)
+HollowFR_pt3 = posx(238.48, -385.41, 497.21, 169.48, -119.62, 71.84)
+HollowFR_pt4 = posx(369.51, -510.95, 497.35, 1.09, 90.83, -90.91)
+
+DeskDI_pt1 = posx(287.69, -285.95, 399.32, 171.69, -146.19, 90.06)
+DeskDI_pt2 = posx(448.59, -303.45, 391.06, 7.14, 140.92, -84.1)
+DeskDI_pt3 = posx(498, -289.11, 439.37, 6.21, 131.2, -89.6)
+DeskDI_pt4 = posx(548.67, -67.18, 379.66, 173.43, -151.79, 36.26)
+DeskDI_pt5 = posx(551.75, -63.78, 378.16, 179.28, -150.93, 43.71)
+DeskDI_pt6 = posx(509.17, -78.98, 507.37, 171.47, -151.22, 36.16)
+
+#Floor_pt1 = posx(-260.41, -272.14, 388.68, 78.48, -176.45, 108.51)
+ConfRoomDI_pt2 = posx(-255.87, 43.9, 380.52, 150.85, 175.32, -125.4)
+ConfRoomDI_pt3 = posx(18.65, 347.33, 329.93, 9.33, 177.98, -173.8)
+ConfRoomDI_pt4 = posx(67.82, 648.05, 29.43, 77.34, 167.13, -103.36)
+ConfRoomDI_pt5 = posx(96.09, 669.32, -49.21, 18.39, 158.12, 178.54)
+ConfRoomDI_pt6 = posx(13.84, 674.92, -49.58, 153.32, 158.6, -6.99)
+
+HollowDI_pt1 = posx(-14.51, -244.51, 405.56, 152.05, -178.67, 58.72)
+HollowDI_pt2 = posx(139.140, -142.310 , 577.410, 9.52, 134.60, -121.36)
+HollowDI_pt3 = posx(291.96, -132.500, 584.48, 8.48, 107.52, 176.31)
+HollowDI_pt4 = posx(642.58, -127.700, 478.000, 2.34, 101.23, 176.33)
+HollowDI_pt5 = posx(734.14, -111.39, 472.67, 4.67, 99.83, 176.29)
+HollowDI_pt6 = posx(785.53, 1.43, 502.67, 1.55, 91.47, 180.0)
+
+# 22. 07. 26
+HollowDI_pt7 = posx(661.23, -0.31, 499.15, 1.53, 91.58, 180.0)
+
+# 22. 07. 29
+# HollowDI_pt8 = posx(781.229980, 40.290001, 558.549988, 1.530000, 91.580002, 174.794434)
+HollowDI_pt8 = posx(635.53, 1.43, 502.67, 1.55, 91.47, 180.0)
+
+# 22. 08. 11
+# HollowDI_pt9 = posx(406.92, -44.340, 527.050, 179.14, -93.00, 0.19)
+# HollowDI_pt9 = posx(486.92, -44.340, 527.050, 179.14, -93.00, 0.19)
+HollowDI_pt9 = posx(487.60, -19.31, 526.13, 178.44, -92.98, 0.16)
+
+# HollowDI_pt9 = posx(352.250, -44.340, 527.050, 179.14, -93.00, 0.19)
+# HollowDI_pt10 = posx(686.920, -49.390, 509.340, 179.13, -93.01, 0.19)
+HollowDI_pt10 = posx(686.99, -44.890, 512.260, 179.12, -93.01, 0.18)
+
+HollowDI_pt11 = posj(174.31, -0.13, -92.07, 79.73, -4.9, -79.76)
+
+# HollowDI_pt10 = posx(686.920, -49.390, 509.340, 179.13, -93.01, 0.19)
+# test_pt1 = posx(0, 0, 50, 0, 0, 0)
+# test_pt2 = posx(0, 0, -80, 0, 0, 0)
+# test_pt3 = posx(0, 0, 100, 0, 0, 0)
+# test_pt4 = posx(0, 0, -50, 0, 0, 0)
+# test_pt5 = posx(0, 0, 20, 0, 0, 0)
+
+# seg1 = posb(DR_LINE, test_pt1, radius=5)
+# seg2 = posb(DR_LINE, test_pt2, radius=5)
+# seg3 = posb(DR_LINE, test_pt3, radius=5)
+# seg4 = posb(DR_LINE, test_pt4, radius=5)
+# seg5 = posb(DR_LINE, test_pt5, radius=5)
+
+# seg_list = [seg1, seg2, seg3, seg4, seg5]
+
+# ~08.11
+# traj1_list = [HollowFR_pt2, HollowFR_pt3, HollowFR_pt4]
+# traj2_list = [HollowFR_pt3, HollowFR_pt2, HollowFR_pt1]
+
+# traj3_list = [HollowBK_pt2, HollowBK_pt3, HollowBK_pt4]
+# traj4_list = [HollowBK_pt3, HollowBK_pt2, HollowBK_pt1]
+
+# traj5_list = [DeskDI_pt1, DeskDI_pt2, DeskDI_pt3, DeskDI_pt4, DeskDI_pt5, DeskDI_pt6]
+# traj6_list = [DeskDI_pt4, DeskDI_pt3, DeskDI_pt2, DeskDI_pt1, HollowBK_pt1]
+
+# traj7_list = [HollowDI_pt2, HollowDI_pt3, HollowDI_pt4, HollowDI_pt5, HollowDI_pt6]
+# traj8_list = [HollowDI_pt5, HollowDI_pt4, HollowDI_pt3, HollowDI_pt2, HollowDI_pt1]
+
+# traj9_list = [HollowDI_pt2, HollowDI_pt3, HollowDI_pt4, HollowDI_pt7]
+# traj10_list = [HollowDI_pt4, HollowDI_pt3, HollowDI_pt2, HollowDI_pt1]
+# traj11_list = [HollowDI_pt2, HollowDI_pt3, HollowDI_pt4, HollowDI_pt5, HollowDI_pt6, HollowDI_pt8]
+
+# 08.11
+traj1_list = [HollowDI_pt9]
+traj2_list = [HollowDI_pt1]
+
+traj3_list = [HollowDI_pt10]
+traj4_list = [HollowDI_pt1]
+
+traj5_list = [HollowDI_pt2, HollowDI_pt3, HollowDI_pt4, HollowDI_pt5, HollowDI_pt6]
+traj6_list = [HollowDI_pt5, HollowDI_pt4, HollowDI_pt3, HollowDI_pt2, HollowDI_pt1]
+
+traj7_list = [DeskDI_pt1, DeskDI_pt2, DeskDI_pt3, DeskDI_pt4, DeskDI_pt5, DeskDI_pt6]
+traj8_list = [DeskDI_pt4, DeskDI_pt3, DeskDI_pt2, DeskDI_pt1, HollowBK_pt1]
+
+traj9_list = [HollowDI_pt2, HollowDI_pt3, HollowDI_pt4, HollowDI_pt7]
+traj10_list = [HollowDI_pt3, HollowDI_pt2, HollowDI_pt1]
+# traj10_list = [HollowDI_pt4, HollowDI_pt3, HollowDI_pt2, HollowDI_pt1]
+traj11_list = [HollowDI_pt2, HollowDI_pt3, HollowDI_pt4, HollowDI_pt5, HollowDI_pt6, HollowDI_pt8]
+
+traj12_list = [HollowDI_pt11]
+
+traj13_list = [HollowDI_pt8]
+# traj13_list = [HollowDI_pt4, HollowDI_pt3, HollowDI_pt2, HollowDI_pt1]
+
+# naviStatus = NavigationControlStatus.IDLING
+prevnaviStatus = NavigationControlStatus.IDLING
+
+def CallbackMovePos(msgs):
+    global bRunMovPos
+    global TrajetoryNum
+
+    xpos = msgs.xpos
+    ypos = msgs.ypos
+    zpos = msgs.zpos
+    rxpos = msgs.rxpos
+    rypos = msgs.rypos
+    rzpos = msgs.rzpos
+
+    # self.MovePos(xpos, ypos, zpos, rx, ry, rz)
+
+    target_pos[0] = xpos
+    target_pos[1] = ypos
+    target_pos[2] = zpos
+    target_pos[3] = rxpos
+    target_pos[4] = rypos
+    target_pos[5] = rzpos
+
+    mov_pos = posx(xpos, ypos, zpos, rxpos, rypos, rzpos)
+
+    print(">> Move pos : %f %f %f %f %f %f\r" % (xpos, ypos, zpos, rxpos, rypos, rzpos))
+
+    # set_vel = 120
+    # set_acc = 150    
+    movel(mov_pos, vel=80, acc = 120, ref=DR_BASE, mod=DR_MV_MOD_ABS)
+
+    trajstat.curstatus = trajstat.RUNNING
+    trajstat.trajnum = 120
+    TrajetoryNum = 120
+
+    pub_TrajStat.publish(trajstat)
+
+    sleep(1.0)
+
+    bRunMovPos = True
+
+
+# def MovePos(self, x, y, z, rx, ry, rz):
+#     mov_pos = posx(x, y, z, rx, ry, rz)
+
+#     print(">> Move pos : %f %f %f %f %ff %f\r" % (xpos, ypos, zpos, rxpos, rypos, rzpos))
+        
+#     movel(mov_pos, vel=set_vel, acc = set_acc, ref=DR_BASE, mod=DR_MV_MOD_ABS)
+
+#     trajstat.curstatus = trajstat.RUNNING
+#     trajstat.trajnum = 200
+
+#     pub_TrajStat.publish(trajstat)
+
+
+def CallbackRobotControlStatus(request):
+    global robotCtrlStatus
+    
+    robotCtrlStatus = request.status
+    
+    print(request.status_description)
+
+
+# def CallbackRunNaviCtrlStatus(request):
+#     global prevnaviStatus
+#     global naviStatus
+    
+#     naviStatus = request.status
+
+#     if(prevnaviStatus != naviStatus):
+#         mstr = request.status_description
+#         print(mstr)
+
+#         print("naviStatus : "+str(naviStatus))
+
+#         prevnaviStatus = naviStatus
+
+
+def Run_DSRTraj1():
+    global run_trajnum
+    global bTrajRunning
+
+    if run_trajnum > 0 and run_trajnum <= len(traj1_list):
+
+        print(">> Move p : %d\r" % (run_trajnum))        
+        # target_pos = traj1_list[run_trajnum-1]        
+        movel(traj1_list[run_trajnum-1], vel=set_vel, acc = set_acc, ref=DR_BASE, mod=DR_MV_MOD_ABS)
+        #bTrajRunning = True
+        if run_trajnum == len(traj1_list):
+            target_pos = traj1_list[run_trajnum-1]
+            pos, sol = get_current_posx()
+
+            print('tx:', target_pos[0],'ty:', target_pos[1],'tz:', target_pos[2], 'trx:', target_pos[3],'try:', target_pos[4],'trz:', target_pos[5])
+            print('px:', pos[0],'py:', pos[1],'pz:', pos[2], 'prx:', pos[3],'pry:', pos[4],'prz:', pos[5])
+
+            if (math.fabs(target_pos[0] - pos[0]) < diffval) and (math.fabs(target_pos[1] - pos[1]) < diffval) and (math.fabs(target_pos[2] - pos[2]) < diffval):
+
+                run_trajnum = 0
+                #bTrajRunning = False
+                print("Done moving trajectory #1\r")
+
+                trajstat.curstatus = trajstat.COMPLETED
+                trajstat.trajnum = 1
+                pub_TrajStat.publish(trajstat)
+                bTrajRunning = False
+                run_trajnum = 1 
+        else:
+            run_trajnum = run_trajnum + 1
+
+            trajstat.curstatus = trajstat.RUNNING
+            trajstat.trajnum = 1
+
+            pub_TrajStat.publish(trajstat)
+
+def Run_DSRTraj2():
+    global run_trajnum
+    global bTrajRunning
+
+    if run_trajnum > 0 and run_trajnum <= len(traj2_list):
+
+        print(">> Move p: %d \r" % (run_trajnum))
+        # target_pos = traj2_list[run_trajnum-1]
+        movel(traj2_list[run_trajnum-1], vel=set_vel, acc = set_acc, ref=DR_BASE, mod=DR_MV_MOD_ABS)
+
+        if run_trajnum == len(traj2_list):
+            target_pos = traj2_list[run_trajnum-1]
+            pos, sol = get_current_posx()
+
+            print('tx:', target_pos[0],'ty:', target_pos[1],'tz:', target_pos[2], 'trx:', target_pos[3],'try:', target_pos[4],'trz:', target_pos[5])
+            print('px:', pos[0],'py:', pos[1],'pz:', pos[2], 'prx:', pos[3],'pry:', pos[4],'prz:', pos[5])
+
+            if (math.fabs(target_pos[0] - pos[0]) < diffval) and (math.fabs(target_pos[1] - pos[1]) < diffval) and (math.fabs(target_pos[2] - pos[2]) < diffval):
+
+                run_trajnum = 0
+                print("Done moving trajectory #2\r")
+
+                trajstat.curstatus = trajstat.COMPLETED
+                trajstat.trajnum = 2
+                pub_TrajStat.publish(trajstat)
+                bTrajRunning = False
+                run_trajnum = 1 
+        else:
+            run_trajnum = run_trajnum + 1
+
+            trajstat.curstatus = trajstat.RUNNING
+            trajstat.trajnum = 2
+
+            pub_TrajStat.publish(trajstat)
+
+def Run_DSRTraj3():
+    global run_trajnum
+    global bTrajRunning
+
+    if run_trajnum > 0 and run_trajnum <= len(traj3_list):
+
+        print(">> Move p: %d \r" % (run_trajnum))
+        # target_pos = traj3_list[run_trajnum-1]
+        movel(traj3_list[run_trajnum-1], vel=set_vel, acc = set_acc, ref=DR_BASE, mod=DR_MV_MOD_ABS)
+        if run_trajnum == len(traj3_list):
+            target_pos = traj3_list[run_trajnum-1]
+            pos, sol = get_current_posx()
+
+            print('tx:', target_pos[0],'ty:', target_pos[1],'tz:', target_pos[2], 'trx:', target_pos[3],'try:', target_pos[4],'trz:', target_pos[5])
+            print('px:', pos[0],'py:', pos[1],'pz:', pos[2], 'prx:', pos[3],'pry:', pos[4],'prz:', pos[5])
+
+            if (math.fabs(target_pos[0] - pos[0]) < diffval) and (math.fabs(target_pos[1] - pos[1]) < diffval) and (math.fabs(target_pos[2] - pos[2]) < diffval):
+
+                run_trajnum = 0
+                print("Done moving trajectory #3\r")
+
+                trajstat.curstatus = trajstat.COMPLETED
+                trajstat.trajnum = 3
+                pub_TrajStat.publish(trajstat)
+                bTrajRunning = False
+                run_trajnum = 1  
+
+        else:
+            run_trajnum = run_trajnum + 1
+
+            trajstat.curstatus = trajstat.RUNNING
+            trajstat.trajnum = 3
+
+            pub_TrajStat.publish(trajstat)        
+
+def Run_DSRTraj4():
+    global run_trajnum
+    global bTrajRunning
+
+    if run_trajnum > 0 and run_trajnum <= len(traj4_list):
+
+        print(">> Move p: %d \r" % (run_trajnum))
+        # target_pos = traj4_list[run_trajnum-1]
+        movel(traj4_list[run_trajnum-1], vel=set_vel, acc = set_acc, ref=DR_BASE, mod=DR_MV_MOD_ABS)
+
+        if run_trajnum == len(traj4_list):
+            target_pos = traj4_list[run_trajnum-1]
+            pos, sol = get_current_posx()
+
+            print('tx:', target_pos[0],'ty:', target_pos[1],'tz:', target_pos[2], 'trx:', target_pos[3],'try:', target_pos[4],'trz:', target_pos[5])
+            print('px:', pos[0],'py:', pos[1],'pz:', pos[2], 'prx:', pos[3],'pry:', pos[4],'prz:', pos[5])
+
+            if (math.fabs(target_pos[0] - pos[0]) < diffval) and (math.fabs(target_pos[1] - pos[1]) < diffval) and (math.fabs(target_pos[2] - pos[2]) < diffval):
+
+                run_trajnum = 0
+                print("Done moving trajectory #4\r")
+
+                trajstat.curstatus = trajstat.COMPLETED
+                trajstat.trajnum = 4
+                pub_TrajStat.publish(trajstat)  
+                bTrajRunning = False
+                run_trajnum = 1
+        else:
+            run_trajnum = run_trajnum + 1
+
+            trajstat.curstatus = trajstat.RUNNING
+            trajstat.trajnum = 4
+
+            pub_TrajStat.publish(trajstat)    
+
+def Run_DSRTraj5():
+    global run_trajnum
+    global bTrajRunning
+    global robotCtrlStatus
+
+    if run_trajnum > 0 and run_trajnum <= len(traj5_list):
+
+        print(">> Move p: %d \r" % (run_trajnum))
+        # target_pos = traj5_list[run_trajnum-1]
+        movel(traj5_list[run_trajnum-1], vel=set_vel, acc = set_acc, ref=DR_BASE, mod=DR_MV_MOD_ABS)
+
+        if run_trajnum == len(traj5_list):
+            target_pos = traj5_list[run_trajnum-1]
+            pos, sol = get_current_posx()
+
+            print('tx:', target_pos[0],'ty:', target_pos[1],'tz:', target_pos[2], 'trx:', target_pos[3],'try:', target_pos[4],'trz:', target_pos[5])
+            print('px:', pos[0],'py:', pos[1],'pz:', pos[2], 'prx:', pos[3],'pry:', pos[4],'prz:', pos[5])
+
+            if (math.fabs(target_pos[0] - pos[0]) < diffval) and (math.fabs(target_pos[1] - pos[1]) < diffval) and (math.fabs(target_pos[2] - pos[2]) < diffval):
+
+                run_trajnum = 0
+                print("Done moving trajectory #5\r")
+
+                trajstat.curstatus = trajstat.COMPLETED
+                trajstat.trajnum = 5
+                pub_TrajStat.publish(trajstat)  
+                bTrajRunning = False
+                run_trajnum = 1
+                # robotCtrlStatus = RobotControlStatus.IDLING
+        else:
+            run_trajnum = run_trajnum + 1
+
+            trajstat.curstatus = trajstat.RUNNING
+            trajstat.trajnum = 5
+            pub_TrajStat.publish(trajstat)
+
+
+def Run_DSRTraj6():
+    global run_trajnum
+    global bTrajRunning
+    global robotCtrlStatus
+
+    if run_trajnum > 0 and run_trajnum <= len(traj6_list):
+
+        print(">> Move p: %d \r" % (run_trajnum))
+        # target_pos = traj6_list[run_trajnum-1]
+        movel(traj6_list[run_trajnum-1], vel=set_vel, acc = set_acc, ref=DR_BASE, mod=DR_MV_MOD_ABS)
+
+        if run_trajnum == len(traj6_list):
+            target_pos = traj6_list[run_trajnum-1]
+            pos, sol = get_current_posx()
+
+            print('tx:', target_pos[0],'ty:', target_pos[1],'tz:', target_pos[2], 'trx:', target_pos[3],'try:', target_pos[4],'trz:', target_pos[5])
+            print('px:', pos[0],'py:', pos[1],'pz:', pos[2], 'prx:', pos[3],'pry:', pos[4],'prz:', pos[5])
+
+            if (math.fabs(target_pos[0] - pos[0]) < diffval) and (math.fabs(target_pos[1] - pos[1]) < diffval) and (math.fabs(target_pos[2] - pos[2]) < diffval):
+
+                run_trajnum = 0
+                print("Done moving trajectory #6\r")
+
+                trajstat.curstatus = trajstat.COMPLETED
+                trajstat.trajnum = 6
+                pub_TrajStat.publish(trajstat)  
+                bTrajRunning = False
+                run_trajnum = 1
+                # robotCtrlStatus = RobotControlStatus.IDLING
+        else:
+            run_trajnum = run_trajnum + 1
+
+            trajstat.curstatus = trajstat.RUNNING
+            trajstat.trajnum = 6
+            pub_TrajStat.publish(trajstat)  
+
+# 220825
+# def Run_DSRTraj7():
+#     global run_trajnum
+#     global bTrajRunning
+
+#     if run_trajnum > 0 and run_trajnum <= len(traj7_list):
+
+#         print(">> Move p: %d \r" % (run_trajnum))
+#         movel(traj7_list[run_trajnum-1], vel=set_vel, acc = set_acc, ref=DR_BASE, mod=DR_MV_MOD_ABS)
+
+#         if run_trajnum == len(traj7_list):
+#             run_trajnum = len(traj7_list) - 1
+#         elif run_trajnum == len(traj7_list) - 1:
+#             run_trajnum = len(traj7_list)
+#         else:
+#             run_trajnum = run_trajnum + 1
+
+#         trajstat.curstatus = trajstat.RUNNING
+#         trajstat.trajnum = 7
+
+#         pub_TrajStat.publish(trajstat)
+
+def Run_DSRTraj7():
+    global run_trajnum
+    global bTrajRunning
+    global robotCtrlStatus
+
+    if run_trajnum > 0 and run_trajnum <= len(traj7_list):
+
+        print(">> Move p: %d \r" % (run_trajnum))
+        target_pos = traj7_list[run_trajnum-1]
+        movel(traj7_list[run_trajnum-1], vel=set_vel, acc = set_acc, ref=DR_BASE, mod=DR_MV_MOD_ABS)
+
+        if run_trajnum == len(traj7_list):
+            target_pos = traj7_list[run_trajnum-1]
+            pos, sol = get_current_posx()
+
+            # print('tx:', target_pos[0],'ty:', target_pos[1],'tz:', target_pos[2], 'trx:', target_pos[3],'try:', target_pos[4],'trz:', target_pos[5])
+            # print('px:', pos[0],'py:', pos[1],'pz:', pos[2], 'prx:', pos[3],'pry:', pos[4],'prz:', pos[5])
+
+            # if (math.fabs(target_pos[0] - pos[0]) < diffval) and (math.fabs(target_pos[1] - pos[1]) < diffval) and (math.fabs(target_pos[2] - pos[2]) < diffval):
+
+            run_trajnum = 0
+            print("Done moving trajectory #7\r")
+
+            trajstat.curstatus = trajstat.COMPLETED
+            trajstat.trajnum = 7
+            pub_TrajStat.publish(trajstat)  
+            bTrajRunning = False
+            run_trajnum = 1
+            # robotCtrlStatus = RobotControlStatus.IDLING
+        else:
+            run_trajnum = run_trajnum + 1
+
+            trajstat.curstatus = trajstat.RUNNING
+            trajstat.trajnum = 7
+            pub_TrajStat.publish(trajstat)
+
+def Run_DSRTraj8():
+    global run_trajnum
+    global bTrajRunning
+
+    if run_trajnum > 0 and run_trajnum <= len(traj8_list):
+
+        print(">> Move p: %d \r" % (run_trajnum))
+        # target_pos = traj8_list[run_trajnum-1]
+        movel(traj8_list[run_trajnum-1], vel=set_vel, acc = set_acc, ref=DR_BASE, mod=DR_MV_MOD_ABS)
+
+        if run_trajnum == len(traj8_list):
+            # target_pos = traj8_list[run_trajnum-1]
+            # pos, sol = get_current_posx()
+
+            # print('tx:', target_pos[0],'ty:', target_pos[1],'tz:', target_pos[2], 'trx:', target_pos[3],'try:', target_pos[4],'trz:', target_pos[5])
+            # print('px:', pos[0],'py:', pos[1],'pz:', pos[2], 'prx:', pos[3],'pry:', pos[4],'prz:', pos[5])
+
+            # if (math.fabs(target_pos[0] - pos[0]) < diffval) and (math.fabs(target_pos[1] - pos[1]) < diffval) and (math.fabs(target_pos[2] - pos[2]) < diffval):
+
+            run_trajnum = 0
+            print("Done moving trajectory #8\r")
+
+            trajstat.curstatus = trajstat.COMPLETED
+            trajstat.trajnum = 8
+            pub_TrajStat.publish(trajstat)  
+            bTrajRunning = False
+            # run_trajnum = 1
+        else:
+            run_trajnum = run_trajnum + 1
+
+            trajstat.curstatus = trajstat.RUNNING
+            trajstat.trajnum = 8
+
+            pub_TrajStat.publish(trajstat)
+
+def Run_DSRTraj9():
+    global run_trajnum
+    global bTrajRunning
+    global robotCtrlStatus
+
+    if run_trajnum > 0 and run_trajnum <= len(traj9_list):
+
+        print(">> Move p : %d\r" % (run_trajnum))
+        # target_pos = traj9_list[run_trajnum-1]
+        movel(traj9_list[run_trajnum-1], vel=set_vel, acc = set_acc, ref=DR_BASE, mod=DR_MV_MOD_ABS)
+
+        if run_trajnum == len(traj9_list):
+            target_pos = traj9_list[run_trajnum-1]
+            pos, sol = get_current_posx()
+
+            print('tx:', target_pos[0],'ty:', target_pos[1],'tz:', target_pos[2], 'trx:', target_pos[3],'try:', target_pos[4],'trz:', target_pos[5])
+            print('px:', pos[0],'py:', pos[1],'pz:', pos[2], 'prx:', pos[3],'pry:', pos[4],'prz:', pos[5])
+
+            if (math.fabs(target_pos[0] - pos[0]) < diffval) and (math.fabs(target_pos[1] - pos[1]) < diffval) and (math.fabs(target_pos[2] - pos[2]) < diffval):
+
+                run_trajnum = 0
+                print("Done moving trajectory #9\r")
+
+                trajstat.curstatus = trajstat.COMPLETED
+                trajstat.trajnum = 9
+                pub_TrajStat.publish(trajstat)
+                bTrajRunning = False
+                run_trajnum = 1 
+                # robotCtrlStatus = RobotControlStatus.IDLING
+        else:
+            run_trajnum = run_trajnum + 1
+
+            trajstat.curstatus = trajstat.RUNNING
+            trajstat.trajnum = 9
+
+            pub_TrajStat.publish(trajstat)
+
+
+def Run_DSRTraj10():
+    global run_trajnum
+    global bTrajRunning
+    global robotCtrlStatus
+
+    if run_trajnum > 0 and run_trajnum <= len(traj10_list):
+
+        print(">> Move p : %d\r" % (run_trajnum))
+        # target_pos = traj10_list[run_trajnum-1]
+        movel(traj10_list[run_trajnum-1], vel=set_vel, acc = set_acc, ref=DR_BASE, mod=DR_MV_MOD_ABS)
+
+        if run_trajnum == len(traj10_list):
+            target_pos = traj10_list[run_trajnum-1]
+            pos, sol = get_current_posx()
+
+            print('tx:', target_pos[0],'ty:', target_pos[1],'tz:', target_pos[2], 'trx:', target_pos[3],'try:', target_pos[4],'trz:', target_pos[5])
+            print('px:', pos[0],'py:', pos[1],'pz:', pos[2], 'prx:', pos[3],'pry:', pos[4],'prz:', pos[5])
+
+            if (math.fabs(target_pos[0] - pos[0]) < diffval) and (math.fabs(target_pos[1] - pos[1]) < diffval) and (math.fabs(target_pos[2] - pos[2]) < diffval):
+
+                run_trajnum = 0
+                print("Done moving trajectory #10\r")
+
+                trajstat.curstatus = trajstat.COMPLETED
+                trajstat.trajnum = 10
+                pub_TrajStat.publish(trajstat)
+                bTrajRunning = False
+                run_trajnum = 1 
+                # robotCtrlStatus = RobotControlStatus.IDLING
+        else:
+            run_trajnum = run_trajnum + 1
+
+            trajstat.curstatus = trajstat.RUNNING
+            trajstat.trajnum = 10
+
+            pub_TrajStat.publish(trajstat)
+
+def Run_DSRTraj11():
+    global run_trajnum
+    global bTrajRunning
+    global robotCtrlStatus
+
+    if run_trajnum > 0 and run_trajnum <= len(traj11_list):
+
+        print(">> Move p : %d\r" % (run_trajnum))
+        # target_pos = traj11_list[run_trajnum-1]
+        movel(traj11_list[run_trajnum-1], vel=set_vel, acc = set_acc, ref=DR_BASE, mod=DR_MV_MOD_ABS)
+
+        if run_trajnum == len(traj11_list):
+            target_pos = traj11_list[run_trajnum-1]
+            pos, sol = get_current_posx()
+
+            print('tx:', target_pos[0],'ty:', target_pos[1],'tz:', target_pos[2], 'trx:', target_pos[3],'try:', target_pos[4],'trz:', target_pos[5])
+            print('px:', pos[0],'py:', pos[1],'pz:', pos[2], 'prx:', pos[3],'pry:', pos[4],'prz:', pos[5])
+
+            if (math.fabs(target_pos[0] - pos[0]) < diffval) and (math.fabs(target_pos[1] - pos[1]) < diffval) and (math.fabs(target_pos[2] - pos[2]) < diffval):
+
+                run_trajnum = 0
+                print("Done moving trajectory #11\r")
+
+                trajstat.curstatus = trajstat.COMPLETED
+                trajstat.trajnum = 11
+                pub_TrajStat.publish(trajstat)
+                bTrajRunning = False
+                run_trajnum = 1 
+                # robotCtrlStatus = RobotControlStatus.IDLING
+        else:
+            run_trajnum = run_trajnum + 1
+
+            trajstat.curstatus = trajstat.RUNNING
+            trajstat.trajnum = 11
+
+            pub_TrajStat.publish(trajstat)
+
+def Run_DSRTraj12():
+    global run_trajnum
+    global bTrajRunning
+    global robotCtrlStatus
+
+    if run_trajnum > 0 and run_trajnum <= len(traj12_list):
+
+        print(">> Move p : %d\r" % (run_trajnum))
+        # target_pos = traj12_list[run_trajnum-1]
+        movej(traj12_list[run_trajnum-1], vel=30, acc=40)
+        # movel(traj12_list[run_trajnum-1], vel=set_vel, acc = set_acc, ref=DR_BASE, mod=DR_MV_MOD_ABS)
+
+        if run_trajnum == len(traj12_list):
+            target_pos = traj12_list[run_trajnum-1]
+            pos, sol = get_current_posx()
+
+            print('tx:', target_pos[0],'ty:', target_pos[1],'tz:', target_pos[2], 'trx:', target_pos[3],'try:', target_pos[4],'trz:', target_pos[5])
+            print('px:', pos[0],'py:', pos[1],'pz:', pos[2], 'prx:', pos[3],'pry:', pos[4],'prz:', pos[5])
+
+            if (math.fabs(target_pos[0] - pos[0]) < diffval) and (math.fabs(target_pos[1] - pos[1]) < diffval) and (math.fabs(target_pos[2] - pos[2]) < diffval):
+
+                run_trajnum = 0
+                print("Done moving trajectory #12\r")
+
+                trajstat.curstatus = trajstat.COMPLETED
+                trajstat.trajnum = 12
+                pub_TrajStat.publish(trajstat)
+                bTrajRunning = False
+                run_trajnum = 1 
+                # robotCtrlStatus = RobotControlStatus.IDLING
+        else:
+            run_trajnum = run_trajnum + 1
+
+            trajstat.curstatus = trajstat.RUNNING
+            trajstat.trajnum = 12
+
+            pub_TrajStat.publish(trajstat)         
+
+def Run_DSRTraj13():
+    global run_trajnum
+    global bTrajRunning
+    global robotCtrlStatus
+
+    if run_trajnum > 0 and run_trajnum <= len(traj13_list):
+
+        print(">> Move p : %d\r" % (run_trajnum))
+        # target_pos = traj13_list[run_trajnum-1]
+        movel(traj13_list[run_trajnum-1], vel=set_vel, acc = set_acc, ref=DR_BASE, mod=DR_MV_MOD_ABS)
+
+        if run_trajnum == len(traj13_list):
+            target_pos = traj13_list[run_trajnum-1]
+            pos, sol = get_current_posx()
+
+            print('tx:', target_pos[0],'ty:', target_pos[1],'tz:', target_pos[2], 'trx:', target_pos[3],'try:', target_pos[4],'trz:', target_pos[5])
+            print('px:', pos[0],'py:', pos[1],'pz:', pos[2], 'prx:', pos[3],'pry:', pos[4],'prz:', pos[5])
+
+            if (math.fabs(target_pos[0] - pos[0]) < diffval) and (math.fabs(target_pos[1] - pos[1]) < diffval) and (math.fabs(target_pos[2] - pos[2]) < diffval):
+
+                run_trajnum = 0
+                print("Done moving trajectory #13\r")
+
+                trajstat.curstatus = trajstat.COMPLETED
+                trajstat.trajnum = 13
+                pub_TrajStat.publish(trajstat)
+                bTrajRunning = False
+                run_trajnum = 1 
+                # robotCtrlStatus = RobotControlStatus.IDLING
+        else:
+            run_trajnum = run_trajnum + 1
+
+            trajstat.curstatus = trajstat.RUNNING
+            trajstat.trajnum = 13
+
+            pub_TrajStat.publish(trajstat)                        
+
+def goto_startpos():
+    print("Move start joint angle...\r")
+    movej(startpos, vel=30, acc=40)  
+
+def Callback_RobotState(msg):    
+    global sRobotState
+    global prev_RobotState
+
+    sRobotState = msg.robot_state_str
+    
+    if sRobotState.find("MOVING") > -1:
+        prev_RobotState = sRobotState
+        # print("prev robot state : ", prev_RobotState)
+
+#     Callback_RobotState.count += 1
+
+#     if (0==(Callback_RobotState.count % 100)): 
+#         rospy.loginfo("________ ROBOT STATUS ________")
+#         print("  robot_state           : %d" % (msg.robot_state))
+#         print("  robot_state_str       : %s" % (msg.robot_state_str))
+#         print("  actual_mode           : %d" % (msg.actual_mode))
+#         print("  actual_space          : %d" % (msg.actual_space))
+#         print("  current_posj          : %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f" % (msg.current_posj[0],msg.current_posj[1],msg.current_posj[2],msg.current_posj[3],msg.current_posj[4],msg.current_posj[5]))
+#         print("  current_velj          : %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f" % (msg.current_velj[0],msg.current_velj[1],msg.current_velj[2],msg.current_velj[3],msg.current_velj[4],msg.current_velj[5]))
+#         print("  joint_abs             : %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f" % (msg.joint_abs[0],msg.joint_abs[1],msg.joint_abs[2],msg.joint_abs[3],msg.joint_abs[4],msg.joint_abs[5]))
+#         print("  joint_err             : %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f" % (msg.joint_err[0],msg.joint_err[1],msg.joint_err[2],msg.joint_err[3],msg.joint_err[4],msg.joint_err[5]))
+#         print("  target_posj           : %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f" % (msg.target_posj[0],msg.target_posj[1],msg.target_posj[2],msg.target_posj[3],msg.target_posj[4],msg.target_posj[5]))
+#         print("  target_velj           : %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f" % (msg.target_velj[0],msg.target_velj[1],msg.target_velj[2],msg.target_velj[3],msg.target_velj[4],msg.target_velj[5]))    
+#         print("  current_posx          : %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f" % (msg.current_posx[0],msg.current_posx[1],msg.current_posx[2],msg.current_posx[3],msg.current_posx[4],msg.current_posx[5]))
+#         print("  current_velx          : %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f" % (msg.current_velx[0],msg.current_velx[1],msg.current_velx[2],msg.current_velx[3],msg.current_velx[4],msg.current_velx[5]))
+#         print("  task_err              : %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f" % (msg.task_err[0],msg.task_err[1],msg.task_err[2],msg.task_err[3],msg.task_err[4],msg.task_err[5]))
+#         print("  solution_space        : %d" % (msg.solution_space))
+#         sys.stdout.write("  rotation_matrix       : ")
+#         for i in range(0 , 3):
+#             sys.stdout.write(  "dim : [%d]"% i)
+#             sys.stdout.write("  [ ")
+#             for j in range(0 , 3):
+#                 sys.stdout.write("%d " % msg.rotation_matrix[i].data[j])
+#             sys.stdout.write("] ")
+#         print ##end line
+#         print("  dynamic_tor           : %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f" % (msg.dynamic_tor[0],msg.dynamic_tor[1],msg.dynamic_tor[2],msg.dynamic_tor[3],msg.dynamic_tor[4],msg.dynamic_tor[5]))
+#         print("  actual_jts            : %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f" % (msg.actual_jts[0],msg.actual_jts[1],msg.actual_jts[2],msg.actual_jts[3],msg.actual_jts[4],msg.actual_jts[5]))
+#         print("  actual_ejt            : %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f" % (msg.actual_ejt[0],msg.actual_ejt[1],msg.actual_ejt[2],msg.actual_ejt[3],msg.actual_ejt[4],msg.actual_ejt[5]))
+#         print("  actual_ett            : %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f" % (msg.actual_ett[0],msg.actual_ett[1],msg.actual_ett[2],msg.actual_ett[3],msg.actual_ett[4],msg.actual_ett[5]))
+#         print("  sync_time             : %7.3f" % (msg.sync_time))
+#         print("  actual_bk             : %d %d %d %d %d %d" % (msg.actual_bk[0],msg.actual_bk[1],msg.actual_bk[2],msg.actual_bk[3],msg.actual_bk[4],msg.actual_bk[5]))
+#         print("  actual_bt             : %d %d %d %d %d " % (msg.actual_bt[0],msg.actual_bt[1],msg.actual_bt[2],msg.actual_bt[3],msg.actual_bt[4]))
+#         print("  actual_mc             : %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f" % (msg.actual_mc[0],msg.actual_mc[1],msg.actual_mc[2],msg.actual_mc[3],msg.actual_mc[4],msg.actual_mc[5]))
+#         print("  actual_mt             : %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f" % (msg.actual_mt[0],msg.actual_mt[1],msg.actual_mt[2],msg.actual_mt[3],msg.actual_mt[4],msg.actual_mt[5]))
+
+#         #print digital i/o
+#         sys.stdout.write("  ctrlbox_digital_input : ")
+#         for i in range(0 , 16):
+#             sys.stdout.write("%d " % msg.ctrlbox_digital_input[i])
+#         print ##end line
+#         sys.stdout.write("  ctrlbox_digital_output: ")
+#         for i in range(0 , 16):
+#             sys.stdout.write("%d " % msg.ctrlbox_digital_output[i])
+#         print
+#         sys.stdout.write("  flange_digital_input  : ")
+#         for i in range(0 , 6):
+#             sys.stdout.write("%d " % msg.flange_digital_input[i])
+#         print
+#         sys.stdout.write("  flange_digital_output : ")
+#         for i in range(0 , 6):
+#             sys.stdout.write("%d " % msg.flange_digital_output[i])
+#         print
+#         #print modbus i/o
+#         sys.stdout.write("  modbus_state          : " )
+#         if len(msg.modbus_state) > 0:
+#             for i in range(0 , len(msg.modbus_state)):
+#                 sys.stdout.write("[" + msg.modbus_state[i].modbus_symbol)
+#                 sys.stdout.write(", %d] " % msg.modbus_state[i].modbus_value)
+#         print
+
+#         print("  access_control        : %d" % (msg.access_control))
+#         print("  homming_completed     : %d" % (msg.homming_completed))
+#         print("  tp_initialized        : %d" % (msg.tp_initialized))
+#         print("  mastering_need        : %d" % (msg.mastering_need))
+#         print("  drl_stopped           : %d" % (msg.drl_stopped))
+#         print("  disconnected          : %d" % (msg.disconnected))
+# Callback_RobotState.count = 0
+
+def CallbackRunTraj(request):
+    global TrajetoryNum
+    global DSRStatus
+    global run_trajnum
+    global bTrajRunning
+
+    TrajetoryNum = request.trajnum
+
+    print("Trajectory Num : ", TrajetoryNum)
+
+    DSRStatus = request.setstatus
+
+    print("Set Status : ", DSRStatus)
+
+    bTrajRunning = True
+
+
+def CallGetPosX(msg):
+    getpos = DSRPos()
+
+    x1, sol = get_current_posx()
+
+    getpos.px = x1[0]
+    getpos.py = x1[1]
+    getpos.pz = x1[2]
+    getpos.rx = x1[3]
+    getpos.ry = x1[4]
+    getpos.rz = x1[5]
+
+    pub_GetPos.publish(getpos)
+
+    print("Send current posx...")
+
+
+def Callback_ESTop(msg):
+    global bEStop_Status
+    global bEStop
+    global run_trajnum
+    global sRobotState
+    global bTrajRunning
+    # global prevnaviStatus
+    # global naviStatus
+    global robotCtrlStatus
+    global prev_RobotState
+
+    bEStop_Status = msg.data
+    
+    # 2022. 03. 03
+    # if robotCtrlStatus == RobotControlStatus.NAVI or robotCtrlStatus == RobotControlStatus.UV or robotCtrlStatus == RobotControlStatus.IDLING:
+    #     return
+    
+    if robotCtrlStatus == RobotControlStatus.DSR:
+
+        # print("EStop Status : {}\r".format(bEStop_Status))
+
+        # if bEStop_Status == 3 and bEStop == False:
+        if bEStop_Status != 1 and bEStop == False:
+            if bEStop_Status == 0:
+                print("Detected Lidar Field\r")
+            elif bEStop_Status == 3:
+                print("Pushed E-Stop Button\r")
+            if bEStop_Status == 2:
+            # elif bEStop_Status == 3:
+                print("Detected Lidar Field and Pushed E-Stop Button\r")
+
+            bEStop = True
+            
+            # prev_RobotState = sRobotState
+            # print("prev robot state : ", prev_RobotState)
+            
+            # 2022. 03. 03
+            # if bTrajRunning == False:
+            #     trajstat.curstatus = trajstat.ESTOP
+            #     trajstat.trajnum = 0
+            #     run_trajnum = 1
+            #     pub_TrajStat.publish(trajstat)
+            # else:
+            #     trajstat.curstatus = trajstat.ESTOP
+            #     trajstat.trajnum = TrajetoryNum
+            #     pub_TrajStat.publish(trajstat)
+
+        elif bEStop == True and bEStop_Status == 1:
+        # elif bEStop == True and bEStop_Status == 0:
+            print("Release E-stop/ Lidar detecting\r")
+            bEStop = False
+            
+            if prev_RobotState.find("MOVING") > -1 and bTrajRunning == False and run_trajnum == 1 :
+            # if prev_RobotState.find("MOVING") > -1 and bTrajRunning is False:
+                if TrajetoryNum != 120:
+                    print(">>> Moving Final Traj.....\r")  
+                                
+
+                    if TrajetoryNum is 1:
+                        run_trajnum = len(traj1_list)
+                    elif TrajetoryNum is 2:
+                        run_trajnum = len(traj2_list)
+                    elif TrajetoryNum is 3:
+                        run_trajnum = len(traj3_list)
+                    elif TrajetoryNum is 4:
+                        run_trajnum = len(traj4_list)
+                    elif TrajetoryNum is 5:
+                        run_trajnum = len(traj5_list)
+                    elif TrajetoryNum is 6:
+                        run_trajnum = len(traj6_list)
+                    elif TrajetoryNum is 7:
+                        run_trajnum = len(traj7_list)
+                    elif TrajetoryNum is 8:
+                        run_trajnum = len(traj8_list)
+                    elif TrajetoryNum is 9:
+                        run_trajnum = len(traj9_list)
+                    elif TrajetoryNum is 10:
+                        run_trajnum = len(traj10_list)
+                    elif TrajetoryNum is 11:
+                        run_trajnum = len(traj11_list)
+                    elif TrajetoryNum is 12:
+                        run_trajnum = len(traj12_list)
+                    elif TrajetoryNum is 13:
+                        run_trajnum = len(traj13_list)                
+                    else:
+                        return
+                                
+                    print(">>> Restart running : final traj.\r")                    
+
+                    trajstat.curstatus = trajstat.RESTART
+                    trajstat.trajnum = TrajetoryNum
+                    pub_TrajStat.publish(trajstat)
+                    
+                    bTrajRunning = True
+
+                return
+                 
+
+ 
+if __name__=="__main__":
+
+    # global bRunMovPos
+    # global run_trajnum
+    # global bTrajRunning
+    # global bGoPos
+
+    
+    # settings = termios.tcgetattr(sys.stdin)
+
+    rospy.init_node('zetabank_dsr')
+    rospy.on_shutdown(shutdown)
+
+    pub_stop = rospy.Publisher('/'+ROBOT_ID +ROBOT_MODEL+'/stop', RobotStop, queue_size=10) 
+
+    rospy.Subscriber("/EmergencyStop", UInt8, Callback_ESTop)          
+
+    rospy.Subscriber("/dsr01m0609/state", RobotState, Callback_RobotState)
+
+    rospy.Subscriber("/control_dsr_traj", ZBDSRSetTraj, CallbackRunTraj)
+
+    pub_TrajStat = rospy.Publisher('/status_dsr_traj', ZBDSRTrajStatus, queue_size=10) 
+
+    rospy.Subscriber("/control_dsr_mov", ZBDSRMove, CallbackMovePos)
+
+    pub_GetPos = rospy.Publisher('/send_dsr_posx', DSRPos, queue_size=10) 
+
+    rospy.Subscriber("/get_dsr_posx", Bool, CallGetPosX)
+
+    # rospy.Subscriber("/get_dsr_posx", DSRPos, CallbackGetPos)
+
+    
+    
+    # 2022. 03. 03
+    # rospy.Subscriber("/navi_ctrl_status", NavigationControlStatus, CallbackRunNaviCtrlStatus)
+    
+    # 2022. 03. 04
+    rospy.Subscriber("/robot_control_status", RobotControlStatus, CallbackRobotControlStatus)
+ 
+    #service_server = rospy.Service('/control_dsr_traj', DSRobot, callbackRunTraj)
+
+    set_robot_mode(ROBOT_MODE_AUTONOMOUS)
+
+    set_velx(30,20)  # set global task speed: 30(mm/sec), 20(deg/sec)
+    set_accx(30,30)  # set global task accel: 60(mm/sec2), 40(deg/sec2)    
+
+    print msg
+
+ 
+    set_safe_stop_reset_type(1)
+
+    run_trajnum = 1
+
+    try :
+        #print msg
+        while(1):
+
+            if DSRStatus == ZBDSRSetTraj.EXIT:
+                print("Exit dsr control process...\r")
+                break
+
+ 
+            if TrajetoryNum is 100:
+                print("Move start joint angle...\r")
+                movej(frontpos, vel=10, acc=20)
+                run_trajnum = 1
+                TrajetoryNum = 0
+            elif TrajetoryNum is 101:
+                print("Move zero position\r")
+                zp = posj(0.0, 0.0, 0.0, 0.0, 0.0, 0.0) #Home
+                movej(zp, vel=30, acc=40)
+                run_trajnum = 1
+                TrajetoryNum = 0
+                bTrajRunning = False
+                bPrevStopFlag = False
+                bStopFlag = False
+                PrevTrajetoryNum = 0
+
+
+            if DSRStatus is ZBDSRSetTraj.STOP and bTrajRunning == True:
+                DSRStatus = 0
+                bStopFlag = True
+                bPrevStopFlag = bStopFlag
+                print("Receive stop message...")
+                print("Stopping trajectory number : %d\r" % (run_trajnum))
+                trajstat.curstatus = trajstat.STOP
+                trajstat.trajnum = TrajetoryNum
+                pub_TrajStat.publish(trajstat)
+                
+            elif DSRStatus is ZBDSRSetTraj.RESTART and bStopFlag == True:
+                bStopFlag = False
+                DSRStatus = 0
+                TrajetoryNum = PrevTrajetoryNum
+                trajstat.curstatus = trajstat.START
+                trajstat.trajnum = TrajetoryNum
+                pub_TrajStat.publish(trajstat)
+
+                trajstat.curstatus = trajstat.RESTART
+                trajstat.trajnum = TrajetoryNum
+                pub_TrajStat.publish(trajstat)
+
+                print("Restarting trajectory number : %d\r" % (run_trajnum))
+
+            elif DSRStatus is ZBDSRSetTraj.START and bStopFlag == True:
+                bStopFlag = False
+                bPrevStopFlag = False
+                run_trajnum = 1
+                print("Receive new start message...TJNum:%d" % (TrajetoryNum))
+
+                trajstat.curstatus = trajstat.START
+                trajstat.trajnum = TrajetoryNum
+                pub_TrajStat.publish(trajstat)
+                # bGoPos = True               
+
+            # elif bGoPos ==  True and sRobotState.find("STANDBY") > -1:
+            #     bGoPos = False
+            #     trajstat.curstatus = trajstat.COMPLETED
+            #     trajstat.trajnum = TrajetoryNum
+
+            #     pub_TrajStat.publish(trajstat)
+
+            #     bTrajRunning = False
+            #     run_trajnum = 1 
+
+            #     print("Going pos completed...")
+
+            if bRunMovPos ==  True and sRobotState.find("STANDBY") > -1 and bStopFlag == False:
+                pos, sol = get_current_posx()
+
+                print('tx:', target_pos[0],'ty:', target_pos[1],'tz:', target_pos[2], 'trx:', target_pos[3],'try:', target_pos[4],'trz:', target_pos[5])
+                print('px:', pos[0],'py:', pos[1],'pz:', pos[2], 'prx:', pos[3],'pry:', pos[4],'prz:', pos[5])
+
+                if (math.fabs(target_pos[0] - pos[0]) < diffval) and (math.fabs(target_pos[1] - pos[1]) < diffval) and (math.fabs(target_pos[2] - pos[2]) < diffval):
+
+                    bRunMovPos = False
+                    trajstat.curstatus = trajstat.COMPLETED
+                    trajstat.trajnum = TrajetoryNum
+
+                    pub_TrajStat.publish(trajstat)
+                
+                    getpos = DSRPos()
+
+                    x1, sol = get_current_posx()
+
+                    getpos.px = x1[0]
+                    getpos.py = x1[1]
+                    getpos.pz = x1[2]
+                    getpos.rx = x1[3]
+                    getpos.ry = x1[4]
+                    getpos.rz = x1[5]
+
+                    pub_GetPos.publish(getpos)
+
+                    print("Moving pos completed...")
+
+
+            if bTrajRunning is True and bEStop is False:
+                #print("Robot Status : {}\r".format(sRobotState))
+
+                if bStopFlag == False and bPrevStopFlag == True:    # Restart robot
+                    bPrevStopFlag= False
+
+                    print("bPrevStopFlag")
+
+                if sRobotState.find("STANDBY") > -1 and bStopFlag == False:
+
+                    if TrajetoryNum is 1:
+                        Run_DSRTraj1()
+                    elif TrajetoryNum is 2:
+                        Run_DSRTraj2()
+                    elif TrajetoryNum is 3:
+                        Run_DSRTraj3()
+                    elif TrajetoryNum is 4:
+                        Run_DSRTraj4()
+                    elif TrajetoryNum is 5:
+                        Run_DSRTraj5()
+                    elif TrajetoryNum is 6:
+                        Run_DSRTraj6()
+                    elif TrajetoryNum is 7:
+                        Run_DSRTraj7()
+                    elif TrajetoryNum is 8:
+                        Run_DSRTraj8()
+                    elif TrajetoryNum is 9:
+                        Run_DSRTraj9()
+                    elif TrajetoryNum is 10:
+                        Run_DSRTraj10()
+                    elif TrajetoryNum is 11:
+                        Run_DSRTraj11()
+                    elif TrajetoryNum is 12:
+                        Run_DSRTraj12()
+                    elif TrajetoryNum is 13:
+                        Run_DSRTraj13()
+
+                    PrevTrajetoryNum = TrajetoryNum
+
+                    print("TRNUM:%d  PreTRNUM:%d\r" % (TrajetoryNum, PrevTrajetoryNum))
+
+
+            sleep(0.02)
+
+
+    except DR_Error:
+        print e
+
+    
+    # termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)

@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/home/geonhee/catkin_ws/devel/include",
+                "/opt/ros/kinetic/include",
+                "/home/geonhee/catkin_ws/src/zetabot_ros/zetabank_autonomous_driving/autonomous_navigation/include",
+                "/home/geonhee/catkin_ws/src/action_engine/src/gazing_controller/include",
+                "/home/geonhee/catkin_ws/src/zetabot_ros/sick_tim/include",
+                "/home/geonhee/catkin_ws/src/zetabot_ros/zetabank_simulation/zetabank_fake/include",
+                "/home/geonhee/catkin_ws/src/zetabot_ros/zetabank_simulation/zetabank_gazebo/include",
+                "/usr/include"
+            ],
+            "name": "Linux",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package>
+  <name>teleop_keyandjoy</name>
+  <version>1.0.0</version>
+  <description>Provides teleoperation of zetabank mobile robot using joysticks or keyboard.</description>
+  
+  <author email="sjyong@humanoidsystem.com">Seo, Jae Yong</author>
+  <maintainer email="sjyong@humanoidsystem.com">Seo, Jae Yong</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>joy</build_depend>
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>joy</run_depend>
+</package>

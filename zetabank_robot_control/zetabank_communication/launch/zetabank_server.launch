@@ -1,0 +1,13 @@
+<launch>
+
+<param name="port" type="int" value="9006" />
+<param name="ip" type="string" value="192.168.0.55" />
+
+
+  <node pkg="zetabank_communication" type="zetabank_server.py" 
+     name="zetabank_server"   output="screen">
+         
+  </node>
+
+</launch>
+

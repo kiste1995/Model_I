@@ -1,0 +1,4 @@
+inflation_layer:
+  # it is directly assoicated with computational power. if it is higher,it will warn like that "ap update loop missed its desired rate"
+  inflation_radius: 1.0 #1.75
+  cost_scaling_factor: 0.5 #2.58

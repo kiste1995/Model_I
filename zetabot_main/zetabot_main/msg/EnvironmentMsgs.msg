@@ -1,0 +1,10 @@
+float32 Dust_PM2_5_ugm3
+float32 Dust_PM10_ugm3
+float32 CO2_ppm
+float32 HCHO_ugm3
+float32 CO_ppm
+float32 NO2_ppm
+float32 Rn_Bqm3
+float32 TVOCs_ugm3
+float32 temp_celcius
+float32 hum_RHp

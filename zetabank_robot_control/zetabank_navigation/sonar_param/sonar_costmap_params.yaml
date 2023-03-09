@@ -1,0 +1,10 @@
+
+sonar_costmap:
+  ns: ""
+  topics: ["/sonar_f", "/sonar_fr", "/sonar_r", "/sonar_br", "/sonar_bl", "/sonar_l", "/sonar_fl"]
+  no_readings_timeout: 5.0
+  clear_threshold: 0.5
+  mark_threshold:  0.8
+  clear_on_max_reading: true
+
+  

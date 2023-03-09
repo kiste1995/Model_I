@@ -1,0 +1,69 @@
+waypoints:
+  - name: device1
+    frame_id: map
+    pose:
+      position:
+        x: 2.6411
+        y: 1.35642
+        z: 0.000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: -0.6809
+        w: 0.7324
+  - name: device2
+    frame_id: map
+    pose:
+      position:
+        x: 2.5619
+        y: -1.27492
+        z: 0.000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: -0.7399
+        w: 0.6727
+  - name: device3
+    frame_id: map
+    pose:
+      position:
+        x: 1.1266
+        y: -3.97108
+        z: 0.0000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.7175
+        w: 0.6966
+  - name: device4
+    frame_id: map
+    pose:
+      position:
+        x: 1.1361
+        y: -1.72178
+        z: 0.00000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.6502
+        w: 0.7598
+  - name: startpose
+    frame_id: map
+    pose:
+      position:
+        x: 0.000000
+        y: 0.000000
+        z: 0.000000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.000000
+        w: 1.000000
+trajectories:
+  - name: HallowDI1
+    waypoints:
+    - device1
+    - device2
+    - device3
+    - device4
+

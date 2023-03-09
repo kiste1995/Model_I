@@ -1,0 +1,9 @@
+<launch>
+
+  <node pkg="robot_control_gui" type="ZBCMRGUI.py" name="ZBMRGS" output="screen">
+    <param name="root_dir" value="$(find robot_control_gui)" />
+    <param name="wp_dir" value="$(find navi_waypoint)" />
+      <!-- <param name="zetabankrobot_dir" value="$(find zetabank_robot_control)" /> -->
+  </node>
+
+</launch>

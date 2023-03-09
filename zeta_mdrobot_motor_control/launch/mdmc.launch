@@ -1,0 +1,5 @@
+<launch>
+
+  <node pkg="zeta_mdrobot_motor_control" type="zeta_mdrobot_motor_control_node"  name="zeta_mdrobot_motor_control_node" output="screen" />
+
+</launch>

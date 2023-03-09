@@ -1,0 +1,13 @@
+########################################
+# Messages
+########################################
+string  command
+string  speed
+float64  moveto_x
+float64  moveto_y
+float64  moveto_theta
+string  setled
+
+---
+
+bool result

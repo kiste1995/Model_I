@@ -1,0 +1,176 @@
+Hallway_Disinfection:
+  - name : Point1
+    type: normal
+    start_point: device1
+    adjust_point: device1_1
+    dsrftnum: 1
+    dsrbtnum: 2
+    dsrnftnum: 3
+    end_point: device1_2
+  - name : Point2
+    type: normal
+    start_point: device2
+    adjust_point: device2_1
+    dsrftnum: 1
+    dsrbtnum: 2
+    dsrnftnum: 3
+    end_point: device2_2
+  - name : Point3
+    type: waypoint
+    start_point: lobbypos4
+    adjust_point: none
+    dsrftnum: 0
+    dsrbtnum: 0
+    dsrnftnum: 0
+    end_point: none
+  - name : Point4
+    type: normal
+    start_point: device5
+    adjust_point: device5_1
+    dsrftnum: 1
+    dsrbtnum: 2
+    dsrnftnum: 3
+    end_point: device5_2
+  - name : Point5
+    type: normal
+    start_point: device6
+    adjust_point: device6_1
+    dsrftnum: 1
+    dsrbtnum: 2
+    dsrnftnum: 3
+    end_point: device6_2
+  - name : Point6
+    type: parking
+    start_point: chargingpos
+    adjust_point: none
+    dsrftnum: 0
+    dsrbtnum: 0
+    dsrnftnum: 0    
+    end_point: none
+ConfRoom_Disinfection:
+  - name : Point7
+    type: waypoint
+    start_point: CRWPDoor
+    dsrftnum: 0
+    dsrbtnum: 0
+    water_pump: none
+    uvlamp: off
+  - name : Point8
+    type: readydsr
+    start_point: CRWP1
+    dsrftnum: 7
+    dsrbtnum: 0
+    water_pump: off
+    uvlamp: off
+  - name : Point9
+    type: wateron
+    start_point: DSOLON1
+    dsrftnum: 0
+    dsrbtnum: 0
+    water_pump: on
+    uvlamp: off
+  - name : Point10
+    type: wateroff
+    start_point: DSOLOFF1
+    dsrftnum: 0
+    dsrbtnum: 0
+    water_pump: off
+    uvlamp: on
+  - name : Point11
+    type: waypoint
+    start_point: CRWP2
+    dsrftnum: 0
+    dsrbtnum: 0
+    water_pump: off
+    uvlamp: off    
+  - name : Point12
+    type: waypoint
+    start_point: CRWP2_1
+    dsrftnum: 0
+    dsrbtnum: 0
+    water_pump: off
+    uvlamp: off        
+  - name : Point13
+    type: wateron
+    start_point: DSOLON2
+    dsrftnum: 0
+    dsrbtnum: 0
+    water_pump: on
+    uvlamp: off    
+  - name : Point14
+    type: wateroff
+    start_point: DSOLOFF2
+    dsrftnum: 0
+    dsrbtnum: 0
+    water_pump: off
+    uvlamp: off    
+  - name : Point15
+    type: waypoint
+    start_point: CRWP3
+    dsrftnum: 0
+    dsrbtnum: 0
+    water_pump: off
+    uvlamp: off       
+  - name : Point16
+    type: waypoint
+    start_point: CRWP4
+    dsrftnum: 0
+    dsrbtnum: 0
+    water_pump: off
+    uvlamp: off      
+  - name : Point17
+    type: wateron
+    start_point: DSOLON3
+    dsrftnum: 0
+    dsrbtnum: 0
+    water_pump: on
+    uvlamp: off    
+  - name : Point18
+    type: wateroff
+    start_point: DSOLOFF3
+    dsrftnum: 0
+    dsrbtnum: 0
+    water_pump: off
+    uvlamp: off        
+  - name : Point19
+    type: waypoint
+    start_point: CRWP5
+    dsrftnum: 0
+    dsrbtnum: 0
+    water_pump: off
+    uvlamp: off       
+  - name : Point20
+    type: wateron
+    start_point: DSOLON4
+    dsrftnum: 0
+    dsrbtnum: 0
+    water_pump: on
+    uvlamp: off    
+  - name : Point21
+    type: wateroff
+    start_point: DSOLOFF4
+    dsrftnum: 0
+    dsrbtnum: 0
+    water_pump: off
+    uvlamp: off         
+  - name : Point22
+    type: stopdsr
+    start_point: CRWP6
+    dsrftnum: 7
+    dsrbtnum: 8
+    water_pump: none
+    uvlamp: off    
+  - name : Point23
+    type: waypoint
+    start_point: CRExitPos
+    dsrftnum: 0
+    dsrbtnum: 0
+    water_pump: off
+    uvlamp: off      
+  - name : Point24
+    type: parking
+    start_point: chargingpos
+    dsrftnum: 0
+    dsrbtnum: 0
+    water_pump: off
+    uvlamp: off  

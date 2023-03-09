@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package>
+  <name>zetabank_description</name>
+  <version>0.1.0</version>
+  <description>
+    3D model of the zetabank for simulation and visualization
+  </description>
+  <license>Apache License 2.0</license>
+  <author email="gunhee6392@gmail.com">Geonhee</author>
+  <maintainer email="gunhee6392@gmail.com">Geonhee</maintainer>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>urdf</build_depend>
+  <build_depend>xacro</build_depend>
+  <run_depend>urdf</run_depend>
+  <run_depend>xacro</run_depend>
+</package>
