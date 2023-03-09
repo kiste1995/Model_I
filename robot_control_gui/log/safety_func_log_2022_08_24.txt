@@ -1,1 +1,0 @@
-time	SafetyInfo	workingRegion	WorkingMode	RobotMode	RobotStatus	RobotPosX	RobotPosY	RobotPosZ2022_08_24 14:53:57 SFN=003 WRegion=000 WMode=000 RMode=000 RStatus=EStop X=-2.202949 Y=-1.011304 Z=0.000000

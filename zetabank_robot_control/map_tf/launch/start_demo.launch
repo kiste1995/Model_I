@@ -1,6 +1,0 @@
-  <launch>
-    
-    <node pkg="map_tf" type="frame_tf2_broadcaster"
-          name="broadcaster_frame" />
-
-  </launch>

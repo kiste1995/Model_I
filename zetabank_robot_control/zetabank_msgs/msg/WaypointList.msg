@@ -1,3 +1,0 @@
-# Way pints
-
-Waypoint[] waypoints

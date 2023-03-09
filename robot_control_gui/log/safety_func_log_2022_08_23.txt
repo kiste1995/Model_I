@@ -1,1 +1,0 @@
-time	SafetyInfo	workingRegion	WorkingMode	RobotMode	RobotStatus	RobotPosX	RobotPosY	RobotPosZ

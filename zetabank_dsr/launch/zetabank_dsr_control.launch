@@ -1,5 +1,0 @@
-<launch>
-
-  <node pkg="zetabank_dsr" type="dsr_control" name="dsr_control" output="screen" required="true"/>
-
-</launch>

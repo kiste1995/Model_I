@@ -1,7 +1,0 @@
-<launch>
-
-    <!-- <node pkg="zetabot_main" type="battery_log.py" name="battery_log" required="true"/> -->
-
-    <node pkg="zetabot_main" type="initial_pos.py" name="initial_pos_srv" output="screen" required="true"/>
-
-</launch>
