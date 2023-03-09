@@ -1,0 +1,6 @@
+<!-- DRFT Command List-->
+<COMMANDS>
+  <COMMAND name="ENABLE_SAFETY_INSPECTION_DRSB_ONLY" id="48" version="1.0" type="control" alias="시스템정보.안전컨트롤러 격리 테스트 활성화">
+    <VARIABLE key="Mode" type="unsigned char" alias="모드" option="비활성화,활성화"/>
+  </COMMAND> 
+</COMMANDS>

@@ -1,0 +1,8 @@
+<launch>
+
+  <include file="$(find zetabank_bringup)/launch/zetabank_core.launch"/>
+  <include file="$(find sick_scan)/launch/sick_tim_561.launch"/>
+  
+  <include file="$(find diffwheel_robot_control)/launch/zetabank_diffwheel_robot_control.launch"/>
+
+</launch>

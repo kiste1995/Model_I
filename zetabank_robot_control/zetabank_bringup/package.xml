@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package>
+  <name>zetabank_bringup</name>
+  <version>0.1.0</version>
+  <description>
+    zetabank bringup package
+  </description>
+  <license>Apache License 2.0</license>
+  <author email="gunhee6392@gmail.com">Geonhee</author>
+  <maintainer email="gunhee6392@gmail.com">Geonhee</maintainer>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>diagnostic_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>zetabank_msgs</build_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>diagnostic_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>zetabank_msgs</run_depend>
+  <run_depend>zetabank_description</run_depend>
+  <run_depend>zetabank_teleop</run_depend>
+  <run_depend>robot_state_publisher</run_depend>
+  <run_depend>rosserial_python</run_depend>
+  <run_depend>hls_lfcd_lds_driver</run_depend>
+  <export></export>
+</package>

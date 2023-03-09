@@ -1,0 +1,24 @@
+<launch>
+        <node pkg="ira_laser_tools" name="laserscan_multi_merger" type="laserscan_multi_merger" output="screen">
+        	<param name="destination_frame" value="lidar_link"/>
+                <!-- <param name="destination_frame" value="base_footprint"/> -->
+		<param name="cloud_destination_topic" value="/merged_cloud"/>
+		<param name="scan_destination_topic" value="/scan"/>
+                <!-- <param name="laserscan_topics" value ="/sick_safetyscanners/scan_front" /> -->
+                <param name="laserscan_topics" value ="/scan_front /scan_rear" />
+                <!-- <param name="laserscan_topics" value ="/sick_safetyscanners/scan_front /sick_safetyscanners/scan_rear" /> -->
+                <param name="angle_min" value="-3.0"/>
+                <!-- <param name="angle_min" value="3.05"/> -->
+                <!-- <param name="angle_min" value="-3.05"/> -->
+                <!-- <param name="angle_min" value="-6.2832"/> -->
+                <param name="angle_max" value="3.0"/>
+                <!-- <param name="angle_max" value="-3.05"/> -->
+                <!-- <param name="angle_max" value="3.05"/> -->
+                <!-- <param name="angle_max" value="6.2832"/> -->
+                <param name="angle_increment" value="0.002967"/>
+                <param name="scan_time" value="0.03"/>
+                <param name="range_min" value="0.70"/>
+                <param name="range_max" value="10.0"/>
+
+	</node>
+</launch>

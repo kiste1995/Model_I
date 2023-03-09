@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg="navi_waypoint" type="navi_waypoint_node"  name="navi_waypoint_node" output="screen" >  
+    <param name="waypoints_filename" value="$(find navi_waypoint)/config/waypoint1.csv"/>
+  </node>
+
+</launch>

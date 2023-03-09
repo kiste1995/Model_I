@@ -1,0 +1,2219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1231</width>
+    <height>894</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QGroupBox" name="wp_groupBox">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>240</y>
+      <width>321</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="title">
+     <string>Navigate Way Points</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <widget class="QComboBox" name="wp_CB">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>40</y>
+       <width>111</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+    </widget>
+    <widget class="QLabel" name="wp_label">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>WayPoints Name :</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="wp_startPB">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>90</y>
+       <width>141</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>START</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="wp_stopPB">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>90</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>STOP</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="traj_groupBox">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>240</y>
+      <width>351</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="title">
+     <string>Navigate Trajectories</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <widget class="QComboBox" name="traj_CB">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>40</y>
+       <width>131</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+    </widget>
+    <widget class="QLabel" name="traj_label">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Trajectory Name :</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="traj_startPB">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>90</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>START</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="traj_stopPB">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>90</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>STOP</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="trajmode_checkBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>90</y>
+       <width>81</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Loop 
+Mode</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="messbox_groupBox">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>560</y>
+      <width>471</width>
+      <height>241</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="title">
+     <string>Message Box</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <widget class="QListView" name="listView">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>431</width>
+       <height>181</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>13</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="exitPB">
+    <property name="geometry">
+     <rect>
+      <x>1060</x>
+      <y>810</y>
+      <width>151</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>EXIT</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="runproc_groupBox">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>0</y>
+      <width>1191</width>
+      <height>231</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="title">
+     <string>Mobile Cooperation Robot(MobiCRobot) Controller</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <widget class="QPushButton" name="run_roscorePB">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>140</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Ubuntu</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Run Roscore</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="run_bringupPB">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>40</y>
+       <width>151</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Ubuntu</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Run Bringup</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="run_slamPB">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>40</y>
+       <width>151</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Ubuntu</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Run SLAM</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="run_teleopPB">
+     <property name="geometry">
+      <rect>
+       <x>1020</x>
+       <y>40</y>
+       <width>151</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Ubuntu</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Run teleop</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="run_2LRFPB">
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>40</y>
+       <width>151</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Ubuntu</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>Act 2LRF</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="run_naviPB">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>100</y>
+       <width>151</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Ubuntu</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Run Navi.</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="run_rvizPB">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>100</y>
+       <width>151</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Ubuntu</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Run NaviRVIZ</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="run_wpcPB">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>100</y>
+       <width>140</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Ubuntu</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Run WPCtrl</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="run_makeWPPB">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>100</y>
+       <width>151</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Ubuntu</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Run makeWP</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="run_saveWPPB">
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>100</y>
+       <width>151</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Ubuntu</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>saveWP</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="run_dsrRobotPB">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>160</y>
+       <width>151</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Run dsr</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="run_Traj1PB">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>160</y>
+       <width>151</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Run dsr Traj</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="run_connectSerial1PB">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>160</y>
+       <width>140</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Ubuntu</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Con. S.#1</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="run_connectSerial2PB">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>160</y>
+       <width>151</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Ubuntu</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Con. S.#2</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="initpos_dsrRobotPB">
+     <property name="geometry">
+      <rect>
+       <x>860</x>
+       <y>160</y>
+       <width>141</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Init. Pos. dsr</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="zeropos_dsrRobotPB">
+     <property name="geometry">
+      <rect>
+       <x>1019</x>
+       <y>160</y>
+       <width>151</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Zero Pos. dsr</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="csparking_PB">
+     <property name="geometry">
+      <rect>
+       <x>1020</x>
+       <y>100</y>
+       <width>151</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Parking C.S.</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="motionctrl_PB">
+     <property name="geometry">
+      <rect>
+       <x>349</x>
+       <y>160</y>
+       <width>151</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Motion Ctrl</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="initpos_dsrRobotPB_2">
+     <property name="geometry">
+      <rect>
+       <x>760</x>
+       <y>260</y>
+       <width>140</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Init. Pos. dsr</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="savemapPB">
+     <property name="geometry">
+      <rect>
+       <x>860</x>
+       <y>40</y>
+       <width>141</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Save Map</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="run_navitestPB">
+     <property name="geometry">
+      <rect>
+       <x>860</x>
+       <y>100</y>
+       <width>140</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Ubuntu</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Run NaviTest</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="run_slamrvizPB">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>40</y>
+       <width>151</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Ubuntu</family>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Run SLAMRVIZ</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="ioctrl_groupBox">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>400</y>
+      <width>1191</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="title">
+     <string>I/O Control</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <widget class="QPushButton" name="frontwfcPB">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>181</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Disable Front WF</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="rearwfcPB">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>90</y>
+       <width>181</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Disable Rear WF</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="frontselwfrnagePB">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>40</y>
+       <width>161</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Front Range #0</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="rearselwfrnagePB">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>90</y>
+       <width>161</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Rear Range #0</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pumpOnPB">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>40</y>
+       <width>101</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Pump On</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pumpOffPB">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>90</y>
+       <width>101</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Pump Off</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="solOnPB">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>40</y>
+       <width>81</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Sol On</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="solOffPB">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>90</y>
+       <width>81</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Sol Off</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="uvcETOnPB">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>40</y>
+       <width>121</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>UVC ET On</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="uvcETOffPB">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>90</y>
+       <width>121</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>UVC ET Off</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="uvcBTOnPB">
+     <property name="geometry">
+      <rect>
+       <x>760</x>
+       <y>40</y>
+       <width>121</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>UVC BT On</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="uvcBTOffPB">
+     <property name="geometry">
+      <rect>
+       <x>760</x>
+       <y>90</y>
+       <width>121</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>UVC BT Off</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="scrubCtrlOnPB">
+     <property name="geometry">
+      <rect>
+       <x>900</x>
+       <y>40</y>
+       <width>131</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Scrub. On</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="scrubCtrlOffPB">
+     <property name="geometry">
+      <rect>
+       <x>900</x>
+       <y>90</y>
+       <width>131</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Scrub. Off</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="greenLaserCtrlPB">
+     <property name="geometry">
+      <rect>
+       <x>1050</x>
+       <y>40</y>
+       <width>121</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>G-Laser On</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="redLaserCtrlPB">
+     <property name="geometry">
+      <rect>
+       <x>1050</x>
+       <y>90</y>
+       <width>121</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>R-Laser On</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="dsrtraj_groupBox">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>720</y>
+      <width>521</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="title">
+     <string>DSR Trajectories</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <widget class="QLabel" name="dsrtraj_label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>161</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Trajetory Name:</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="dsrtraj_CB">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>40</y>
+       <width>221</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+    </widget>
+    <widget class="QLabel" name="dsrstatus_label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>DSR Status :</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="dsrstat_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>80</y>
+       <width>261</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>13</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="dsrtraj_runPB">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>40</y>
+       <width>111</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>RUN</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="dsrtraj_stopstartPB">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>80</y>
+       <width>111</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Stop</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="mrstatus_groupBox">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>560</y>
+      <width>521</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="title">
+     <string>Mobile Robot Status</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <widget class="QLabel" name="mrstat_label">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>131</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>MR Status   :</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="mrstat_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>40</y>
+       <width>351</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+    </widget>
+    <widget class="QLabel" name="pumpled_label">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>110</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="resources.qrc">:/icons/gray-led-on.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="pumptext_label">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>80</y>
+       <width>41</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Pump</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="soltext_label">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>80</y>
+       <width>31</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Sol</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="solled_label">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>110</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="resources.qrc">:/icons/gray-led-on.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="uvcetext_label">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>80</y>
+       <width>41</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>UVCE</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="UVCEled_label">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>110</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="resources.qrc">:/icons/gray-led-on.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="fwftext_label">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>80</y>
+       <width>41</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>F-WF</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="fwtled_label">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>110</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="resources.qrc">:/icons/gray-led-on.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="rwftext_label">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>80</y>
+       <width>51</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>R-WF</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="rwtled_label">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>110</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="resources.qrc">:/icons/gray-led-on.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="frantext_label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>31</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>FR:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="fran_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>90</y>
+       <width>31</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>13</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="rrantext_label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>120</y>
+       <width>31</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>RR :</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="rran_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>120</y>
+       <width>31</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>13</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="uvcbtext_label">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>80</y>
+       <width>41</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>UVCB</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="UVCBled_label">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>110</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="resources.qrc">:/icons/gray-led-on.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="scrubtext_label">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>80</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>SCRUB</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Scrubled_label">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>110</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="resources.qrc">:/icons/gray-led-on.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="glaserled_label">
+     <property name="geometry">
+      <rect>
+       <x>430</x>
+       <y>110</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="resources.qrc">:/icons/gray-led-on.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="glasertext_label">
+     <property name="geometry">
+      <rect>
+       <x>430</x>
+       <y>80</y>
+       <width>31</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>GL</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="rlasertext_label">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>80</y>
+       <width>31</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>RL</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="rlaserled_label">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>110</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="resources.qrc">:/icons/gray-led-on.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="autorun_groupBox">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>240</y>
+      <width>471</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="title">
+     <string>Auto Run</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <widget class="QPushButton" name="runhdiPB">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>90</y>
+       <width>131</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Run HDI</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="runcrdiPB">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>90</y>
+       <width>131</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Run CRDI</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="autoparkingPB">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>40</y>
+       <width>131</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Auto C.S.</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="readyPB">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>131</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Ready</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="stopprocPB">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>40</y>
+       <width>131</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Stop P.</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pauseprocPB">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>90</y>
+       <width>131</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Pause P.</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="motionctrl_groupBox">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>560</y>
+      <width>161</width>
+      <height>281</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="title">
+     <string>Motion Ctrl</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <widget class="QLabel" name="lspeed_label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>L-Speed</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lspeed_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>30</y>
+       <width>51</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="aspeed_label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>A-Speed</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="aspeed_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>70</y>
+       <width>51</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lsinc_label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>110</y>
+       <width>71</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>LS Inc</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lsinc_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>110</y>
+       <width>51</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="asinc_label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>150</y>
+       <width>71</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>AS Inc</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="asinc_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>150</y>
+       <width>51</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="mcinit_PB">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>190</y>
+       <width>141</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Init Value</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="imu_label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>250</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>IMU</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLCDNumber" name="imu_lcdNumber">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>240</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <italic>false</italic>
+       <bold>true</bold>
+       <kerning>true</kerning>
+      </font>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <property name="lineWidth">
+      <number>1</number>
+     </property>
+     <property name="midLineWidth">
+      <number>0</number>
+     </property>
+     <property name="smallDecimalPoint">
+      <bool>false</bool>
+     </property>
+     <property name="segmentStyle">
+      <enum>QLCDNumber::Flat</enum>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1231</width>
+     <height>28</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources>
+  <include location="resources.qrc"/>
+  <include location="resources.qrc"/>
+  <include location="../../../../coopmobilr_robot_220215/src/navi_waypoint/scripts/resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

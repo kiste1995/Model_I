@@ -1,0 +1,34 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/home/zetabank/catkin_ws/devel/include",
+                "/opt/ros/kinetic/include",
+                "/home/zetabank/catkin_ws/src/autocharge/include",
+                "/home/zetabank/catkin_ws/src/zetabank_robot_control/zetabank_autonomous_driving/autonomous_navigation/include",
+                "/home/zetabank/catkin_ws/src/zetabank_robot_control/diffwheel_robot_control/include",
+                "/home/zetabank/catkin_ws/src/zetabank_robot_control/imu_tools/imu_complementary_filter/include",
+                "/home/zetabank/catkin_ws/src/zetabank_robot_control/imu_tools/imu_filter_madgwick/include",
+                "/home/zetabank/catkin_ws/src/map_server_car/include",
+                "/home/zetabank/catkin_ws/src/rf2o_laser_odometry/include",
+                "/home/zetabank/catkin_ws/src/zetabank_robot_control/robot_localization/include",
+                "/home/zetabank/catkin_ws/src/zetabank_robot_control/sick_scan/include",
+                "/home/zetabank/catkin_ws/src/zetabank_robot_control/sick_tim/include",
+                "/home/zetabank/catkin_ws/src/turtlebot3_slam/include",
+                "/home/zetabank/catkin_ws/src/zetabank_robot_control/zetabank_simulation/zetabank_fake/include",
+                "/home/zetabank/catkin_ws/src/zetabank_robot_control/zetabank_simulation/zetabank_gazebo/include",
+                "/usr/include"
+            ],
+            "name": "Linux",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}

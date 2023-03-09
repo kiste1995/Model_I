@@ -1,0 +1,30 @@
+<launch>
+
+  
+<param name="port" type="int" value="9006" />
+<param name="ip" type="string" value="192.168.0.55" />
+
+<include file="$(find zetabank_navigation)/launch/zetabank_nav_simul.launch"/>
+
+
+  <node pkg="zetabank_communication" type="zetabank_server.py" 
+     name="zetabank_server"   output="screen">
+  </node>
+
+
+  <node pkg="autonomous_navigation" type="movement" 
+     name="movement"   output="screen">
+  </node>
+
+
+  <node pkg="autonomous_navigation" type="initializeAMCLParticles" 
+     name="initializeAMCLParticles"   output="screen">
+  </node>
+
+
+  
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find zetabank_navigation)/rviz/zetabank_nav.rviz" />
+  
+
+</launch>
+

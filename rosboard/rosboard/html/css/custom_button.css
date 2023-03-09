@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+:root {
+  --button-color: #ffffff;
+  --button-bg-color: #0d6efd;
+  --button-hover-bg-color: #025ce2;
+}
+
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  
+  background: var(--button-bg-color);
+  color: var(--button-color);
+  
+  margin: 0;
+  padding: 0.5rem 1rem;
+  
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+  
+  border: none;
+  border-radius: 4px;
+  
+  display: inline-block;
+  width: auto;
+  
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  
+  cursor: pointer;
+  
+  transition: 0.5s;
+}
+
+button.forward {
+  --button-bg-color: #323cc9;
+  --button-hover-bg-color: #241b7c;
+}
+
+button.backward {
+  --button-bg-color: #d333d3;
+  --button-hover-bg-color: #6e155f;
+}
+
+button.left {
+  --button-bg-color: #d3a033;
+  --button-hover-bg-color: #865f18;
+}
+
+button.right {
+  --button-bg-color: #d0d333;
+  --button-hover-bg-color: #848618;
+}
+
+button.stop {
+  --button-bg-color: #d33333;
+  --button-hover-bg-color: #861818;
+}
+
+button.success {
+  --button-bg-color: #28a745;
+  --button-hover-bg-color: #218838;
+}
+
+button.error {
+  --button-bg-color: #dc3545;
+  --button-hover-bg-color: #c82333;
+}
+
+button.warning {
+  --button-color: #212529;
+  --button-bg-color: #ffc107;
+  --button-hover-bg-color: #e0a800;
+}
+
+button:active,
+button:hover,
+button:focus {
+  background: var(--button-hover-bg-color);
+  outline: 0;
+}
+button:disabled {
+  opacity: 0.5;
+}
+
+form {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+  background: #eee;
+}

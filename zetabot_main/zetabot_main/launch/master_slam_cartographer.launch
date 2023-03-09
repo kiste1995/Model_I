@@ -1,0 +1,11 @@
+<launch>
+    <rosparam file="$(find zetabot_main)/param/normar_operater.yaml" command="load" />
+
+    <include file="$(find zetabank_bringup)/launch/zetabank_robot.launch">
+        <arg name="rs_serial_no_1" value="1"/>
+        <arg name="rs_serial_no_2" value="2"/>
+    </include>
+
+    <include file="$(find zetabank_slam)/launch/zetabank_slam_cartographer.launch" />
+
+</launch>

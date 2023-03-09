@@ -1,0 +1,25 @@
+<launch>
+
+  <node pkg="navi_waypoint" type="navigation_waypoints_node"  name="navigation_waypoints_node" output="screen" required="true">  
+    <!-- <param name="waypoints_filename" value="$(find navi_waypoint)/config/HDIWP8.yaml"/> -->
+    <!-- <param name="waypoints_filename" value="$(find navi_waypoint)/config/HDIWP7.yaml"/> -->
+    <!-- <param name="waypoints_filename" value="$(find navi_waypoint)/config/HDIWP5.yaml"/> -->
+    <!-- <param name="waypoints_filename" value="$(find navi_waypoint)/config/HDIWP2.yaml"/> -->
+    <!-- <param name="waypoints_filename" value="$(find navi_waypoint)/config/HDIWP9.yaml"/> -->
+    <!-- <param name="waypoints_filename" value="$(find navi_waypoint)/config/HDIWP10.yaml"/> -->
+    <!-- <param name="waypoints_filename" value="$(find navi_waypoint)/config/HDIWP11.yaml"/> -->
+    <!-- <param name="waypoints_filename" value="$(find navi_waypoint)/config/HDIWP12.yaml"/> -->
+    <!-- <param name="waypoints_filename" value="$(find navi_waypoint)/config/HDIWP13.yaml"/> -->
+    <!-- <param name="waypoints_filename" value="$(find navi_waypoint)/config/HDIWP16.yaml"/> -->
+    <param name="waypoints_filename" value="$(find robot_control_gui)/config/HDIWP99.yaml"/>
+    <!-- <param name="waypoints_filename" value="$(find navi_waypoint)/config/HDIWP88.yaml"/> -->
+    <!-- <param name="waypoints_filename" value="$(find navi_waypoint)/config/HDIWP77.yaml"/> -->
+
+    <param name="abort_mode" value="back"/>
+    <param name="back_time" value="3.0"/>
+    <param name="th_reardist" value="30.0"/>
+    <!-- <param name="th_frontdist" value="20.0"/> -->
+    <param name="low_soc" value="60.0"/>
+  </node>
+
+</launch>

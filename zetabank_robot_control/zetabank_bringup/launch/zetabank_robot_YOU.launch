@@ -1,0 +1,20 @@
+<launch>
+
+  <include file="$(find zetabank_bringup)/launch/zetabank_lidar_sick561.launch"/>
+	
+  <!-- <node pkg="zetabank_bringup" type="zetabank_diagnostics" name="zetabank_diagnostics" output="screen" /> -->
+  
+  <include file="$(find diffwheel_robot_control)/launch/zetabank_diffwheel_robot_control.launch"/>
+
+  <!-- <node pkg="rosserial_python" type="serial_node.py" name="IMU_sensor">
+    <param name="port" value="/dev/ttyACM-IMU"/>
+    <param name="baud" value="115200"/>
+  </node> -->
+
+
+  <!-- <node pkg="rosserial_python" type="serial_node.py" name="SONAR_sensor" output="screen">
+    <param name="port" value="/dev/ttyACM-SONAR"/>
+    <param name="baud" value="115200"/>
+  </node> -->
+
+</launch>

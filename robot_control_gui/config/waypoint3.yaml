@@ -1,0 +1,69 @@
+waypoints:
+  - name: name1
+    frame_id: map
+    pose:
+      position:
+        x: 1.800492
+        y: -2.27
+        z: 0.000523
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.499242
+        w: 0.866462
+  - name: name2
+    frame_id: map
+    pose:
+      position:
+        x: 2.6
+        y: 1.497
+        z: 0.004893
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: -0.7124
+        w: 0.7018
+  - name: name3
+    frame_id: map
+    pose:
+      position:
+        x: -1.709374
+        y: -0.194257
+        z: 0.003729
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.704883
+        w: 0.709323
+  - name: name4
+    frame_id: map
+    pose:
+      position:
+        x: -1.700945
+        y: 1.148124
+        z: 0.002736
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.163833
+        w: 0.986488
+  - name: name5
+    frame_id: map
+    pose:
+      position:
+        x: 0.101975
+        y: 1.763955
+        z: -0.000652
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.000000
+        w: 1.000000
+trajectories:
+  - name: goto_pos1
+    waypoints:
+    - name1
+    - name2
+    - name3
+    - name4
+    - name5

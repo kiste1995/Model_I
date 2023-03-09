@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>496</width>
+    <height>408</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QGroupBox" name="wp_groupBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>459</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Navigate Way Points</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <widget class="QComboBox" name="wp_CB">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>40</y>
+       <width>111</width>
+       <height>25</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="wp_label">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>131</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>WayPoints Name :</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="wp_startPB">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>90</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>START</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="wp_pausePB">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>90</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>PAUSE</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="stopPB">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>90</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>STOP</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="traj_groupBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>190</y>
+      <width>459</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Navigate Trajectories</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <widget class="QComboBox" name="traj_CB">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>40</y>
+       <width>111</width>
+       <height>25</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="traj_label">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>131</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Trajectories Name :</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="traj_startPB">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>90</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>START</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="traj_pausePB">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>90</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>PAUSE</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="traj_stopPB">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>90</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>STOP</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>496</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

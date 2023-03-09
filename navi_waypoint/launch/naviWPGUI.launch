@@ -1,0 +1,8 @@
+<launch>
+
+  <node pkg="navi_waypoint" type="ncWPGUI.py" name="ncWPGUI" output="screen" >
+    <param name="root_dir" value="$(find navi_waypoint)" />
+	  <!-- <param name="zetabankrobot_dir" value="$(find zetabank_robot_control)" /> -->
+  </node>
+
+</launch>

@@ -1,0 +1,5 @@
+<launch>
+
+  <node pkg="make_waypoint" type="make_waypoint_node"  name="make_waypoint_node" output="screen" />
+
+</launch>

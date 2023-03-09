@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg="navi_waypoint" type="ncWPGUI.py" name="ncWPGUI" output="screen" >
+    <param name="root_dir" value="$(find navi_waypoint)" />
+  </node>
+
+</launch>

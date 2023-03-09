@@ -1,0 +1,5 @@
+<launch>
+
+  <node pkg="mdrobot_motor_control_test" type="mdrobot_motor_control_test_node"  name="mdrobot_motor_control_test_node" output="screen" />
+
+</launch>

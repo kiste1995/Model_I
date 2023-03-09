@@ -1,0 +1,428 @@
+waypoints:
+  - name: device1
+    frame_id: map
+    pose:
+      position:
+        x: 21.4526799851
+        y: -6.06527946024
+        z: 0.000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: -0.0579393181814
+        w: 0.998320106684
+  - name: device1_1
+    frame_id: map
+    pose:
+      position:
+        x: 22.0099608149
+        y: -6.54134067907
+        z: 0.000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: -0.0315539298919
+        w: 0.999502050777
+  - name: device2
+    frame_id: map
+    pose:
+      position:
+        x: 44.2175900399
+        y: -7.61103374734
+        z: 0.000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: -0.0292524958068
+        w: 0.999572054176
+  - name: device2_1
+    frame_id: map
+    pose:
+      position:
+        x: 44.5703665971
+        y: -8.08499178844
+        z: 0.000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: -0.0148234398488
+        w: 0.999890126779
+  - name: device3
+    frame_id: map
+    pose:
+      position:
+        x: 65.2084781017
+        y: -11.8831478974
+        z: 0.00000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.69467662681
+        w: 0.719322169938
+  - name: device3_1
+    frame_id: map
+    pose:
+      position:
+        x: 65.5604003293
+        y: -11.1447419478
+        z: 0.000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.726981332397
+        w: 0.686657223327
+  - name: device4
+    frame_id: map
+    pose:
+      position:
+        x: 65.2005178363
+        y: -11.356157868
+        z: 0.00000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.685084486104
+        w: 0.728463620848
+  - name: device4_1
+    frame_id: map
+    pose:
+      position:
+        x: 65.5943213804
+        y: -11.0406039614
+        z: 0.000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.688882442114
+        w: 0.724873079199
+  - name: device5
+    frame_id: map
+    pose:
+      position:
+        x: 43.9585873674
+        y: -8.45768668796
+        z: 0.000000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.999489241443
+        w: 0.031957099979
+  - name: device5_1
+    frame_id: map
+    pose:
+      position:
+        x: 44.5660329794
+        y: -8.17408767628
+        z: 0.000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.999750320931
+        w: 0.0223449277828
+  - name: device6
+    frame_id: map
+    pose:
+      position:
+        x: 32.7596204552
+        y: -7.6053804852
+        z: 0.00000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.999660870139
+        w: 0.0260412118222
+  - name: device6_1
+    frame_id: map
+    pose:
+      position:
+        x: 33.5383468059
+        y: -7.35243866303
+        z: 0.000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.99527194212
+        w: 0.0971275513371
+  - name: lobbypos1
+    frame_id: map
+    pose:
+      position:
+        # x: 58.7980987482
+        # y: -12.1399040725
+        x: 64.1317787276
+        y: -12.2506381039
+        z: 0.000000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        # z: -0.0584346283835
+        # w: 0.998291237168
+        z: -0.0268712110158
+        w: 0.999638903814
+  - name: lobbypos2
+    frame_id: map
+    pose:
+      position:
+        x: 64.047089703
+        y: -12.2595403671
+        # x: 56.6793527038
+        # y: -9.07328831397
+        z: 0.000000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: -0.0260273137382
+        w: 0.999661232088
+        # z: -0.727126476216
+        # w: 0.68650352336
+  - name: lobbypos3
+    frame_id: map
+    pose:
+      position:
+        x: 58.6414086547
+        y: -9.58630648298
+        # x: 56.6793527038
+        # y: -9.07328831397
+        z: 0.000000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.999504824209
+        w: 0.0314659559264
+        # z: -0.727126476216
+        # w: 0.68650352336
+  - name: lobbypos4
+    frame_id: map
+    pose:
+      position:
+        x: 54.272918074
+        y: -9.12721744322
+        # x: 56.6793527038
+        # y: -9.07328831397
+        z: 0.000000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.999024990814
+        w: 0.0441482471784
+        # z: -0.727126476216
+        # w: 0.68650352336
+  - name: chargingpos
+    frame_id: map
+    pose:
+      position:
+        x: 6.51109291337
+        y: -3.50301154034
+        z: 0.000000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: -0.761176960873
+        w: 0.648544242312
+  - name: CRWPDoor
+    frame_id: map
+    pose:
+      position:
+        x: 11.8403612207
+        y: -7.38683268614
+        z: 0.000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: -0.718610169556
+        w: 0.695413132038
+  - name: CRWP1
+    frame_id: map
+    pose:
+      position:
+        x: 13.31693455
+        y: -10.9581594
+        z: 0.000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.999609118
+        w: 0.027957305
+  - name: DSOLON1
+    frame_id: map
+    pose:
+      position:
+        x: 12.2203208791
+        y: -11.2074367128
+        z: 0.000000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.999458780682
+        w: 0.0328959833013
+  - name: DSOLOFF1
+    frame_id: map
+    pose:
+      position:
+        x: 6.09808705907
+        y: -10.6864240772
+        z: 0.000000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.999228577192
+        w: 0.039271497577
+  - name: CRWP2
+    frame_id: map
+    pose:
+      position:
+        x: 4.990105137
+        y: -10.5010223
+        z: 0.000000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: -0.00604596
+        w: 0.999981723
+  - name: DSOLON2
+    frame_id: map
+    pose:
+      position:
+        x: 5.97992331639
+        y: -10.3928597979
+        z: 0.000000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.0238385502835
+        w: 0.999715821381
+  - name: DSOLOFF2
+    frame_id: map
+    pose:
+      position:
+        x: 12.18880283
+        y: -10.8298682127
+        z: 0.000000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: -0.0293694182117
+        w: 0.999734960049
+  - name: CRWP3
+    frame_id: map
+    pose:
+      position:
+        x: 13.26109089
+        y: -10.9919601
+        z: 0.00000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.693065382
+        w: 0.720874729
+  - name: CRWP4
+    frame_id: map
+    pose:
+      position:
+        x: 13.36628431
+        y: -8.97447877
+        z: 0.00000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.994218645
+        w: 0.107374511
+  - name: CRWP5
+    frame_id: map
+    pose:
+      position:
+        x: 5.165288825
+        y: -8.42092451
+        z: 0.00000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: -0.71949950
+        w: 0.694492960
+  - name: CRWP6
+    frame_id: map
+    pose:
+      position:
+        x: 5.006249880
+        y: -10.5385566
+        z: 0.00000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: -0.01615698
+        w: 0.999869467
+  - name: CRWP7
+    frame_id: map
+    pose:
+      position:
+        x: 13.38604565
+        y: -10.9255300
+        z: 0.00000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: -0.72770481
+        w: 0.685890445
+  - name: CRWP8
+    frame_id: map
+    pose:
+      position:
+        x: 13.25302822
+        y: -13.1493526
+        z: 0.00000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.999952480
+        w: 0.009748689
+  - name: CRWP9
+    frame_id: map
+    pose:
+      position:
+        x: 4.97303724496
+        y: -11.7995896856
+        z: 0.00000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.704523238
+        w: 0.709680919
+  - name: CRWP10
+    frame_id: map
+    pose:
+      position:
+        x: 5.172140779
+        y: -8.27040611
+        z: 0.00000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.051826561
+        w: 0.998656101
+  - name: CRExitPos
+    frame_id: map
+    pose:
+      position:
+        x: 11.8403612207
+        y: -7.38683268614
+        z: 0.00000
+      orientation:
+        x: 0.000000
+        y: 0.000000
+        z: 0.695666939169
+        w: 0.7183644686
+
+trajectories:
+  - name: CRTRAJ1
+    waypoints:
+    - CRWP4
+    - CRWP5
+    - CRWP6
+    - DSOLON2
+    - CRWP7
+    - CRWP8
+    - CRWP9
+    - CRWP10
+
+  
+

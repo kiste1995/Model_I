@@ -1,0 +1,9 @@
+<launch>
+
+  <include file="$(find zetabank_bringup)/launch/zetabank_lidar_sick561.launch"/>
+	
+  <node pkg="zetabank_bringup" type="zetabank_diagnostics" name="zetabank_diagnostics" output="screen" />
+  
+  <include file="$(find diffwheel_robot_control)/launch/zetabank_diffwheel_robot_control.launch"/>
+
+</launch>
